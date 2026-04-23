@@ -42,169 +42,50 @@
     }
 
     .page {
-      max-width: 1180px;
+      max-width: 980px;
       margin: 0 auto;
     }
 
-    /* Top Nav */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-badge {
-      border: 3px solid var(--gold);
-      color: white;
-      border-radius: 999px;
-      padding: 16px 22px;
-      font-weight: 700;
-      line-height: 1.05;
-      font-size: 1rem;
-      min-width: 165px;
+    /* Simple Header */
+    .header {
       text-align: center;
-      background: rgba(255,255,255,0.02);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      color: white;
-      font-weight: 500;
-      font-size: 1rem;
-    }
-
-    .nav span {
-      cursor: default;
-      white-space: nowrap;
-    }
-
-    /* Hero */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 34px;
-      align-items: start;
       margin-bottom: 40px;
     }
 
-    .hero-copy {
-      padding-top: 28px;
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
     }
 
-    .eyebrow {
-      display: inline-block;
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 22px;
-      text-decoration: underline;
-      text-underline-offset: 4px;
+    .logo-wrap img {
+      max-width: 180px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
     }
 
-    .hero h1 {
-      font-size: clamp(2.6rem, 6vw, 4.6rem);
-      line-height: 0.98;
+    .tool-title {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.02;
       font-weight: 800;
       letter-spacing: -0.04em;
-      margin-bottom: 26px;
+      margin-bottom: 18px;
     }
 
-    .hero p {
-      color: var(--muted);
-      font-size: 1.14rem;
-      line-height: 1.7;
+    .tool-description {
       max-width: 760px;
-      margin-bottom: 30px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-hero {
-      border-radius: 999px;
-      padding: 16px 30px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      border: 2px solid white;
-      cursor: pointer;
-      transition: 0.2s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .btn-hero.primary {
-      background: white;
-      color: #0d2b4c;
-      border-color: white;
-    }
-
-    .btn-hero.primary:hover {
-      background: #f1f7ff;
-    }
-
-    .btn-hero.secondary {
-      background: transparent;
-      color: white;
-    }
-
-    .btn-hero.secondary:hover {
-      background: rgba(255,255,255,0.08);
-    }
-
-    .hero-panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 24px;
-      min-height: 280px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-    }
-
-    .hero-panel .panel-title {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(255,255,255,0.72);
-      margin-bottom: 10px;
-    }
-
-    .hero-panel h3 {
-      font-size: 1.8rem;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .hero-panel p {
+      margin: 0 auto;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 1.05rem;
       line-height: 1.7;
-      margin-bottom: 0;
     }
 
-    /* Calculator area */
     .calculator-shell {
       display: grid;
       grid-template-columns: 1fr;
       gap: 14px;
-      max-width: 980px;
-      margin: 0 auto;
     }
 
     .card {
@@ -442,7 +323,6 @@
 
     .btn-calc {
       width: 100%;
-      max-width: 980px;
       padding: 18px;
       background: var(--accent);
       color: white;
@@ -454,7 +334,6 @@
       text-transform: uppercase;
       font-weight: 700;
       cursor: pointer;
-      margin: 4px auto 4px;
       transition: all 0.18s ease;
       box-shadow: 0 14px 34px rgba(30,167,255,0.22);
     }
@@ -466,11 +345,9 @@
 
     .results {
       width: 100%;
-      max-width: 980px;
       display: none;
       flex-direction: column;
       gap: 14px;
-      margin: 0 auto;
     }
 
     .results.visible {
@@ -675,10 +552,6 @@
     }
 
     @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
       .input-grid {
         grid-template-columns: 1fr;
       }
@@ -704,25 +577,8 @@
         padding: 20px 14px 40px;
       }
 
-      .topbar {
+      .header {
         margin-bottom: 28px;
-      }
-
-      .brand-badge {
-        min-width: unset;
-        width: 100%;
-      }
-
-      .hero-copy {
-        padding-top: 0;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-      }
-
-      .btn-hero {
-        width: 100%;
       }
 
       .mode-toggle {
@@ -734,45 +590,17 @@
 <body>
   <div class="page">
 
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-badge">Premier<br>Pools & Spas</div>
+    <div class="header">
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Premier Pools & Spas Logo">
       </div>
-      <div class="nav">
-        <span>Find A Pool Builder</span>
-        <span>Inground Pools</span>
-        <span>Features</span>
-        <span>Galleries</span>
-        <span>Contact</span>
-      </div>
+      <h1 class="tool-title">Review Impact Calculator</h1>
+      <p class="tool-description">
+        Quickly estimate how adding or removing reviews affects your overall rating, and use the What-If section to see how many new reviews may be needed to reach a target score.
+      </p>
     </div>
 
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">The World's Largest Pool Builder</div>
-        <h1>Build Your Dream<br>Review Impact Tool</h1>
-        <p>
-          Use this calculator to see how adding or removing reviews changes your average rating.
-          Styled with the Premier Pools & Spas brand aesthetic: bold, clean, modern, and built
-          to feel like part of the same experience.
-        </p>
-        <div class="hero-buttons">
-          <a href="#calculator" class="btn-hero primary">Design Your Results</a>
-          <a href="#results" class="btn-hero secondary">Request A Quote</a>
-        </div>
-      </div>
-
-      <div class="hero-panel">
-        <div class="panel-title">Featured Tool</div>
-        <h3>Review Impact Calculator</h3>
-        <p>
-          Enter your current review count and rating, then simulate new reviews or removals
-          to understand how your score shifts before making decisions.
-        </p>
-      </div>
-    </section>
-
-    <div class="calculator-shell" id="calculator">
+    <div class="calculator-shell">
 
       <div class="card">
         <div class="card-label">Current Review Snapshot</div>
