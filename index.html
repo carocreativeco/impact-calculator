@@ -1174,13 +1174,17 @@
 
   <div class="card" style="margin-bottom:14px;">
     <div class="lb-toggle-row">
-      <div class="card-label" style="margin-bottom:0;">Top Offices by Total Points</div>
+      <div id="lbBrandTabs" class="lb-brand-tabs"></div>
       <div class="lb-toggle">
         <button class="lb-toggle-btn active" onclick="setLbCount(5, this)">Top 5</button>
         <button class="lb-toggle-btn" onclick="setLbCount(10, this)">Top 10</button>
       </div>
     </div>
-    <div class="lb-grid" id="lbGrid"></div>
+    <div class="card-label" style="margin-top:4px;margin-bottom:14px;">Top Offices by Total Points</div>
+    <div class="lb-layout">
+      <div id="lbMain"></div>
+      <div class="lb-sidebar" id="lbSidebar"></div>
+    </div>
   </div>
 
   <!-- Data status footer -->
