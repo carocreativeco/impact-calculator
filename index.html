@@ -14,10 +14,7 @@
       --accent-dark: #108fe0;
       --text: #ffffff;
       --muted: rgba(255,255,255,0.72);
-      --green: #66d39b;
-      --star4: #9ad96b;
       --star5: #59d7a7;
-      --warn: #ffd166;
     }
 
     * {
@@ -163,6 +160,13 @@
       text-align: right;
     }
 
+    .mini-note {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.6;
+    }
+
     .btn-calc {
       width: 100%;
       padding: 18px;
@@ -196,25 +200,17 @@
       display: flex;
     }
 
-    .summary-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .summary-card {
+    .summary-card,
+    .overview-card,
+    .breakdown {
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.16);
+      padding: 24px 26px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
     }
 
-    .summary-card.s4 {
-      border-color: rgba(154,217,107,0.35);
-    }
-
-    .summary-card.s5 {
+    .summary-card {
       border-color: rgba(89,215,167,0.35);
     }
 
@@ -239,15 +235,6 @@
       border-radius: 999px;
       font-size: 0.8rem;
       font-weight: 700;
-    }
-
-    .badge.s4 {
-      background: rgba(154,217,107,0.14);
-      color: var(--star4);
-      border: 1px solid rgba(154,217,107,0.35);
-    }
-
-    .badge.s5 {
       background: rgba(89,215,167,0.14);
       color: var(--star5);
       border: 1px solid rgba(89,215,167,0.35);
@@ -267,30 +254,17 @@
       line-height: 1.6;
     }
 
-    .overview-card,
-    .breakdown,
-    .education-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px 26px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
-    }
-
-    .overview-text,
-    .education-text {
+    .overview-text {
       font-size: 1rem;
       color: rgba(255,255,255,0.78);
       line-height: 1.75;
     }
 
-    .overview-text strong,
-    .education-text strong {
+    .overview-text strong {
       color: white;
     }
 
-    .overview-text .hi,
-    .education-text .hi {
+    .overview-text .hi {
       color: var(--accent);
       font-weight: 700;
     }
@@ -342,16 +316,8 @@
       font-weight: 700;
     }
 
-    .mini-note {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.62);
-      line-height: 1.6;
-    }
-
     @media (max-width: 800px) {
-      .input-grid,
-      .summary-strip {
+      .input-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -365,7 +331,7 @@
       </div>
       <h1 class="tool-title">Review Impact Calculator</h1>
       <p class="tool-description">
-        Estimate how many additional 4-star and 5-star reviews may be needed to improve your current rating and reach a target score.
+        Estimate how many additional 5-star reviews may be needed to improve your current rating and reach a target score.
       </p>
     </div>
 
@@ -391,44 +357,25 @@
         <div class="slider-val" id="target-val">4.80</div>
       </div>
       <div class="mini-note">
-        This projection compares the number of additional 4★ and 5★ reviews needed to reach your selected rating goal.
+        This projection estimates how many additional 5★ reviews are needed to reach your selected rating goal.
       </div>
     </div>
 
     <button class="btn-calc" onclick="calculateProjection()">Calculate Rating Path</button>
 
     <div class="results" id="results">
-
-      <div class="summary-strip">
-        <div class="summary-card s4">
-          <div class="summary-top">
-            <div class="summary-title">Scenario</div>
-            <div class="badge s4">4★ Reviews</div>
-          </div>
-          <div class="summary-value" id="res-needed-4">—</div>
-          <div class="summary-sub" id="res-needed-4-sub">—</div>
+      <div class="summary-card">
+        <div class="summary-top">
+          <div class="summary-title">Projection</div>
+          <div class="badge">5★ Reviews</div>
         </div>
-
-        <div class="summary-card s5">
-          <div class="summary-top">
-            <div class="summary-title">Scenario</div>
-            <div class="badge s5">5★ Reviews</div>
-          </div>
-          <div class="summary-value" id="res-needed-5">—</div>
-          <div class="summary-sub" id="res-needed-5-sub">—</div>
-        </div>
+        <div class="summary-value" id="res-needed-5">—</div>
+        <div class="summary-sub" id="res-needed-5-sub">—</div>
       </div>
 
       <div class="overview-card">
         <div class="card-label">Strategic Overview</div>
         <div class="overview-text" id="overview-text">—</div>
-      </div>
-
-      <div class="education-card">
-        <div class="card-label">Why This Matters</div>
-        <div class="education-text">
-          This tool helps franchise owners understand the relationship between <strong>review volume</strong> and <strong>average rating</strong>. As the number of total reviews grows, it generally takes more positive reviews to create meaningful movement in the overall GPA. By making that relationship visible, the calculator helps translate reputation goals into concrete review targets that can support local outreach, customer follow-up, service recovery, and broader reputation strategy.
-        </div>
       </div>
 
       <div class="breakdown">
@@ -495,15 +442,7 @@
         return;
       }
 
-      const fourStar = calculateNeeded(total, gpa, target, 4);
       const fiveStar = calculateNeeded(total, gpa, target, 5);
-
-      document.getElementById('res-needed-4').textContent =
-        fourStar ? fourStar.needed.toLocaleString() : 'Not possible';
-      document.getElementById('res-needed-4-sub').textContent =
-        fourStar
-          ? `Projected GPA ${fourStar.achieved.toFixed(4)} across ${fourStar.total.toLocaleString()} total reviews`
-          : `A 4★ average cannot raise a profile to ${target.toFixed(2)}`;
 
       document.getElementById('res-needed-5').textContent =
         fiveStar ? fiveStar.needed.toLocaleString() : 'Not possible';
@@ -512,39 +451,19 @@
           ? `Projected GPA ${fiveStar.achieved.toFixed(4)} across ${fiveStar.total.toLocaleString()} total reviews`
           : `A 5★ average cannot raise a profile to ${target.toFixed(2)}`;
 
-      let overview = `With <strong>${total.toLocaleString()} current reviews</strong> at an average of <strong>${gpa.toFixed(2)}</strong>, reaching <strong>${target.toFixed(2)}</strong> would require different review acquisition outcomes depending on review quality. `;
-
-      if (fourStar) {
-        overview += `At a consistent <span class="hi">4★ pace</span>, you would need approximately <strong>${fourStar.needed.toLocaleString()}</strong> additional reviews. `;
-      } else {
-        overview += `A <span class="hi">4★ review strategy</span> would not be sufficient to reach this target. `;
-      }
-
-      if (fiveStar) {
-        overview += `At a <span class="hi">5★ pace</span>, you would need approximately <strong>${fiveStar.needed.toLocaleString()}</strong> additional reviews. `;
-      }
-
-      overview += `This comparison helps turn a rating goal into a more practical reputation planning target.`;
+      let overview = `With <strong>${total.toLocaleString()} current reviews</strong> at an average of <strong>${gpa.toFixed(2)}</strong>, reaching <strong>${target.toFixed(2)}</strong> would require approximately <span class="hi">${fiveStar.needed.toLocaleString()} additional 5★ reviews</span>. `;
+      overview += `If achieved, your profile would reach <strong>${fiveStar.achieved.toFixed(4)}</strong> across <strong>${fiveStar.total.toLocaleString()} total reviews</strong>. This provides a practical review acquisition target that can support local reputation planning and outreach efforts.`;
 
       document.getElementById('overview-text').innerHTML = overview;
 
       const currentPoints = total * gpa;
       const steps = [];
-
       steps.push(`<strong>Current Total Rating Points:</strong> ${total.toLocaleString()} × ${gpa.toFixed(2)} = <span class="hi">${currentPoints.toFixed(2)}</span>`);
       steps.push(`<strong>Target GPA Selected:</strong> <span class="hi">${target.toFixed(2)}</span>`);
-
-      if (fourStar) {
-        steps.push(`<strong>Using 4★ Reviews:</strong> approximately <span class="hi">${fourStar.needed.toLocaleString()}</span> new reviews are needed to reach <span class="hi">${fourStar.achieved.toFixed(4)}</span> across ${fourStar.total.toLocaleString()} reviews`);
-      } else {
-        steps.push(`<strong>Using 4★ Reviews:</strong> <span class="hi">not sufficient</span> to reach a target GPA of ${target.toFixed(2)} because 4★ reviews are below the target average`);
-      }
-
-      if (fiveStar) {
-        steps.push(`<strong>Using 5★ Reviews:</strong> approximately <span class="hi">${fiveStar.needed.toLocaleString()}</span> new reviews are needed to reach <span class="hi">${fiveStar.achieved.toFixed(4)}</span> across ${fiveStar.total.toLocaleString()} reviews`);
-      } else {
-        steps.push(`<strong>Using 5★ Reviews:</strong> <span class="hi">not sufficient</span> to reach the selected goal`);
-      }
+      steps.push(`<strong>Using 5★ Reviews:</strong> approximately <span class="hi">${fiveStar.needed.toLocaleString()}</span> new reviews are needed`);
+      steps.push(`<strong>New Total Reviews:</strong> ${total.toLocaleString()} + ${fiveStar.needed.toLocaleString()} = <span class="hi">${fiveStar.total.toLocaleString()}</span>`);
+      steps.push(`<strong>Projected Rating Points:</strong> ${currentPoints.toFixed(2)} + (${fiveStar.needed.toLocaleString()} × 5) = <span class="hi">${fiveStar.points.toFixed(2)}</span>`);
+      steps.push(`<strong>Projected GPA:</strong> ${fiveStar.points.toFixed(2)} ÷ ${fiveStar.total.toLocaleString()} = <span class="hi">${fiveStar.achieved.toFixed(4)}</span>`);
 
       document.getElementById('steps').innerHTML = steps.map(s =>
         `<div class="step"><span class="step-num"></span><span class="step-text">${s}</span></div>`
