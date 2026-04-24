@@ -254,6 +254,148 @@
       .vs-badge { display: none; }
       .delta-row { grid-template-columns: 110px 1fr 60px; }
     }
+
+    /* ── Leaderboard ── */
+
+    /* ── Leaderboard brand tabs ── */
+    .lb-brand-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .lb-brand-tab {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      letter-spacing: 0.06em;
+    }
+    .lb-brand-tab:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+    .lb-brand-tab.active {
+      background: rgba(30,167,255,0.15);
+      border-color: rgba(30,167,255,0.5);
+      color: var(--accent);
+    }
+    .lb-brand-tab.your-brand {
+      border-color: rgba(30,167,255,0.35);
+      color: rgba(30,167,255,0.7);
+    }
+    .lb-brand-tab.your-brand.active {
+      background: rgba(30,167,255,0.18);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .lb-single { }
+
+    .lb-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .lb-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .lb-toggle-btn {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      letter-spacing: 0.04em;
+    }
+    .lb-toggle-btn.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 14px rgba(30,167,255,0.3);
+    }
+    .lb-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .lb-brand-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+    }
+    .lb-brand-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .lb-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .lb-table th {
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-weight: 600;
+      padding: 0 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .lb-table th.num { text-align: right; }
+    .lb-table td {
+      padding: 9px 8px;
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: middle;
+    }
+    .lb-table tr:last-child td { border-bottom: none; }
+    .lb-table td.num { text-align: right; font-weight: 700; }
+    .lb-rank-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lb-rank-badge {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .lb-rank-1 { background: #ffd166; color: #0d2b4c; }
+    .lb-rank-2 { background: rgba(255,255,255,0.18); color: white; }
+    .lb-rank-3 { background: rgba(205,127,50,0.6); color: white; }
+    .lb-rank-other { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+    .lb-highlight { color: white; font-weight: 700; }
+    .lb-you-row td { background: rgba(30,167,255,0.08); }
+    .lb-you-row td:first-child { border-radius: 8px 0 0 8px; }
+    .lb-you-row td:last-child { border-radius: 0 8px 8px 0; }
+
+    @media (max-width: 700px) {
+      .lb-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -473,7 +615,7 @@
 
 <script>
   // ── CONFIG ──────────────────────────────────────────────
-  const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/refs/heads/main/locations.json';
+  const DATA_URL = 'https://raw.githubusercontent.com/YOURUSERNAME/pfm-review-data/main/locations.json';
 
   // ── STATE ───────────────────────────────────────────────
   let locationData = [];
@@ -500,6 +642,7 @@
 
       populateCalcDropdown();
       populateBrandDropdown();
+      renderLeaderboards();
 
     } catch (err) {
       console.error('Data load failed:', err);
@@ -531,12 +674,24 @@
       document.getElementById('currentGPA').value = '';
       document.getElementById('recoveryText').textContent = 'Select a location to estimate 1★ review impact and recovery cost.';
       document.getElementById('results').classList.remove('visible');
+      renderLeaderboards();
       return;
     }
     document.getElementById('totalPoints').value = calcSelectedLocation.totalPoints;
     document.getElementById('currentGPA').value = parseFloat(calcSelectedLocation.gpa).toFixed(2);
     renderRecoveryPlanner(calcSelectedLocation);
     document.getElementById('results').classList.remove('visible');
+    lbActiveBrand = null; // reset so new brand auto-highlights
+    renderLeaderboards();
+
+    // Auto-sync peer comparison to selected location
+    const brand = calcSelectedLocation.brand;
+    const brandSel = document.getElementById('brandSelect');
+    brandSel.value = brand;
+    handleBrandChange();
+    const youSel = document.getElementById('youSelect');
+    youSel.value = calcSelectedLocation.id;
+    handleYouChange();
   }
 
   function updateTargetValue() {
@@ -792,12 +947,155 @@
     document.getElementById('comparisonResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+
+  // ── LEADERBOARDS ─────────────────────────────────────────
+  let lbCount = 5;
+  let lbActiveBrand = null;
+  const LB_BRANDS = ['PPAS', 'PPSRV', 'PINN', 'PINNSRV'];
+
+  function setLbCount(n, btn) {
+    lbCount = n;
+    document.querySelectorAll('.lb-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLeaderboards();
+  }
+
+  function setLbBrand(brand) {
+    lbActiveBrand = brand;
+    document.querySelectorAll('.lb-brand-tab').forEach(b => {
+      b.classList.toggle('active', b.dataset.brand === brand);
+    });
+    renderLeaderboards();
+  }
+
+  function buildBrandTabs(yourBrand) {
+    const container = document.getElementById('lbBrandTabs');
+    if (!container) return;
+    container.innerHTML = '';
+    LB_BRANDS.forEach(brand => {
+      const btn = document.createElement('button');
+      btn.className = 'lb-brand-tab' + (brand === yourBrand ? ' your-brand' : '') + (brand === lbActiveBrand ? ' active' : '');
+      btn.dataset.brand = brand;
+      btn.textContent = brand + (brand === yourBrand ? ' ★' : '');
+      btn.onclick = () => setLbBrand(brand);
+      container.appendChild(btn);
+    });
+  }
+
+  function renderLeaderboards() {
+    const grid = document.getElementById('lbGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const yourBrand = calcSelectedLocation ? calcSelectedLocation.brand : null;
+    const displayBrand = lbActiveBrand || yourBrand || LB_BRANDS[0];
+
+    // Build/refresh tabs
+    buildBrandTabs(yourBrand);
+
+    // Make sure active tab matches
+    if (lbActiveBrand !== displayBrand) {
+      lbActiveBrand = displayBrand;
+      document.querySelectorAll('.lb-brand-tab').forEach(b => {
+        b.classList.toggle('active', b.dataset.brand === displayBrand);
+      });
+    }
+
+    const youId = calcSelectedLocation ? calcSelectedLocation.id : null;
+
+    const entries = locationData
+      .filter(l => l.brand === displayBrand)
+      .sort((a, b) => parseFloat(b.totalPoints) - parseFloat(a.totalPoints))
+      .slice(0, lbCount);
+
+    if (entries.length === 0) {
+      grid.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:0.88rem;padding:12px 0;">No data for this brand.</div>';
+      return;
+    }
+
+    // Check if selected location is outside top N — show their rank too
+    let yourEntry = null;
+    if (youId && calcSelectedLocation && calcSelectedLocation.brand === displayBrand) {
+      const allSorted = locationData
+        .filter(l => l.brand === displayBrand)
+        .sort((a, b) => parseFloat(b.totalPoints) - parseFloat(a.totalPoints));
+      const yourRankIdx = allSorted.findIndex(l => l.id === youId);
+      if (yourRankIdx >= lbCount) {
+        yourEntry = { loc: allSorted[yourRankIdx], rank: yourRankIdx + 1 };
+      }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'lb-brand-card lb-single';
+
+    let rows = entries.map((loc, i) => {
+      const rank = i + 1;
+      const rankClass = rank === 1 ? 'lb-rank-1' : rank === 2 ? 'lb-rank-2' : rank === 3 ? 'lb-rank-3' : 'lb-rank-other';
+      const isYou = loc.id === youId;
+      const rowClass = isYou ? 'lb-you-row' : '';
+      const nameDisplay = isYou ? `<span class="lb-highlight">${loc.office} ★</span>` : loc.office;
+      return `<tr class="${rowClass}">
+        <td><div class="lb-rank-cell"><span class="lb-rank-badge ${rankClass}">${rank}</span></div></td>
+        <td>${nameDisplay}</td>
+        <td class="num">${parseFloat(loc.totalPoints).toLocaleString(undefined,{maximumFractionDigits:1})}</td>
+        <td class="num">${parseFloat(loc.gpa).toFixed(2)}</td>
+      </tr>`;
+    }).join('');
+
+    // Append your row below the list if outside top N
+    if (yourEntry) {
+      const r = yourEntry.rank;
+      const rankClass = 'lb-rank-other';
+      rows += `<tr><td colspan="4" style="padding:4px 0;"><div style="text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;">· · ·</div></td></tr>`;
+      rows += `<tr class="lb-you-row">
+        <td><div class="lb-rank-cell"><span class="lb-rank-badge ${rankClass}">${r}</span></div></td>
+        <td><span class="lb-highlight">${yourEntry.loc.office} ★</span></td>
+        <td class="num">${parseFloat(yourEntry.loc.totalPoints).toLocaleString(undefined,{maximumFractionDigits:1})}</td>
+        <td class="num">${parseFloat(yourEntry.loc.gpa).toFixed(2)}</td>
+      </tr>`;
+    }
+
+    card.innerHTML = `
+      <table class="lb-table">
+        <thead><tr>
+          <th style="width:36px"></th>
+          <th>Office</th>
+          <th class="num">Points</th>
+          <th class="num">Score</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+
+    grid.appendChild(card);
+  }
+
   // ── INIT ─────────────────────────────────────────────────
   updateTargetValue();
   loadData();
 
   document.addEventListener('keydown', e => { if (e.key === 'Enter') calculateProjection(); });
 </script>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3: BRAND LEADERBOARDS
+  ══════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-header-line"></div>
+    <div class="section-header-label">Brand Leaderboards</div>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="lb-toggle-row">
+      <div class="card-label" style="margin-bottom:0;">Top Offices by Total Points</div>
+      <div class="lb-toggle">
+        <button class="lb-toggle-btn active" onclick="setLbCount(5, this)">Top 5</button>
+        <button class="lb-toggle-btn" onclick="setLbCount(10, this)">Top 10</button>
+      </div>
+    </div>
+    <div class="lb-grid" id="lbGrid"></div>
+  </div>
 
   <!-- Data status footer -->
   <div class="data-bar">
