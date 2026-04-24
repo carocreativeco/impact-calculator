@@ -15,13 +15,12 @@
       --text: #ffffff;
       --muted: rgba(255,255,255,0.72);
       --star5: #59d7a7;
+      --danger: #ff7676;
+      --warn: #ffd166;
+      --purple: #a78bfa;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -31,85 +30,61 @@
       padding: 32px 20px 60px;
     }
 
-    .page {
-      max-width: 920px;
-      margin: 0 auto;
-    }
+    .page { max-width: 980px; margin: 0 auto; }
 
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 36px; }
+    .logo-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+    .logo-wrap img { max-width: 180px; width: 100%; height: auto; object-fit: contain; display: block; }
+    .tool-title { font-size: clamp(2.1rem, 5vw, 3.8rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 14px; }
+    .tool-description { max-width: 760px; margin: 0 auto; color: var(--muted); font-size: 1.03rem; line-height: 1.7; }
 
-    .logo-wrap {
+    /* ── Data status bar ── */
+    .data-bar {
       display: flex;
-      justify-content: center;
-      margin-bottom: 24px;
+      align-items: center;
+      gap: 10px;
+      background: rgba(30,167,255,0.08);
+      border: 1px solid rgba(30,167,255,0.2);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.7);
     }
-
-    .logo-wrap img {
-      max-width: 180px;
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      display: block;
+    .data-bar .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--warn);
+      flex-shrink: 0;
     }
+    .data-bar .dot.live { background: var(--star5); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .data-bar strong { color: white; }
 
-    .tool-title {
-      font-size: clamp(2.1rem, 5vw, 3.8rem);
-      line-height: 1.02;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 18px;
-    }
+    /* ── Section divider ── */
+    .section-header { display: flex; align-items: center; gap: 14px; margin: 32px 0 20px; }
+    .section-header-line { flex: 1; height: 1px; background: var(--border); }
+    .section-header-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; white-space: nowrap; }
 
-    .tool-description {
-      max-width: 760px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
-
+    /* ── Cards ── */
     .card {
       width: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 26px;
+      padding: 24px 26px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       backdrop-filter: blur(8px);
       margin-bottom: 14px;
     }
+    .card-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.68); margin-bottom: 18px; font-weight: 600; }
 
-    .card-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.68);
-      margin-bottom: 18px;
-      font-weight: 600;
-    }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .input-group label {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.8);
-      font-weight: 500;
-    }
-
-    .input-group input {
+    /* ── Inputs ── */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { font-size: 0.8rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+    .input-group input,
+    .input-group select {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.16);
       border-radius: 14px;
@@ -120,54 +95,23 @@
       outline: none;
       transition: 0.18s ease;
       width: 100%;
+      appearance: none;
     }
+    .input-group input::placeholder { color: rgba(255,255,255,0.45); }
+    .input-group input:focus,
+    .input-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(30,167,255,0.14); }
+    .input-group select:disabled { opacity: 0.4; cursor: not-allowed; }
+    .mini-note { margin-top: 12px; font-size: 0.9rem; color: rgba(255,255,255,0.62); line-height: 1.6; }
+    .filter-note { margin-top: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.45); font-style: italic; }
 
-    .input-group input::placeholder {
-      color: rgba(255,255,255,0.45);
-    }
+    /* ── Slider ── */
+    .projection-label { font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 14px; font-weight: 600; }
+    .slider-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+    .slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
+    .slider-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); min-width: 62px; text-align: right; }
 
-    .input-group input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(30,167,255,0.14);
-    }
-
-    .projection-label {
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 6px;
-    }
-
-    .slider-row input[type=range] {
-      flex: 1;
-      accent-color: var(--accent);
-    }
-
-    .slider-val {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--accent);
-      min-width: 62px;
-      text-align: right;
-    }
-
-    .mini-note {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.62);
-      line-height: 1.6;
-    }
-
-    .btn-calc {
+    /* ── Buttons ── */
+    .btn-calc, .btn-compare {
       width: 100%;
       padding: 18px;
       background: var(--accent);
@@ -184,300 +128,653 @@
       box-shadow: 0 14px 34px rgba(30,167,255,0.22);
       margin-bottom: 14px;
     }
+    .btn-calc:hover, .btn-compare:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .btn-compare:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    .btn-calc:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
-    }
+    /* ── Calculator Results ── */
+    .results { display: none; flex-direction: column; gap: 14px; }
+    .results.visible { display: flex; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-    .results {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .results.visible {
-      display: flex;
-    }
-
-    .summary-card,
-    .overview-card,
-    .breakdown {
+    .summary-card, .overview-card, .breakdown, .leaderboard-card, .tool-card {
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 24px 26px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.14);
     }
+    .summary-card { border-color: rgba(89,215,167,0.35); }
 
-    .summary-card {
-      border-color: rgba(89,215,167,0.35);
-    }
+    .summary-top, .tool-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .summary-title, .tool-title-sm { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
 
-    .summary-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
+    .badge { padding: 7px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; background: rgba(89,215,167,0.14); color: var(--star5); border: 1px solid rgba(89,215,167,0.35); }
+    .badge.warn { color: var(--warn); background: rgba(255,209,102,0.12); border-color: rgba(255,209,102,0.3); }
+    .badge.danger { color: var(--danger); background: rgba(255,118,118,0.12); border-color: rgba(255,118,118,0.3); }
 
-    .summary-title {
-      font-size: 0.82rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      font-weight: 600;
-    }
+    .summary-value { font-size: 2.2rem; line-height: 1; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .summary-sub, .overview-text, .leaderboard-text, .tool-text { font-size: 0.96rem; color: var(--muted); line-height: 1.7; }
+    .overview-text strong, .leaderboard-text strong, .tool-text strong { color: white; }
+    .overview-text .hi, .leaderboard-text .hi, .tool-text .hi { color: var(--accent); font-weight: 700; }
 
-    .badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      background: rgba(89,215,167,0.14);
-      color: var(--star5);
-      border: 1px solid rgba(89,215,167,0.35);
-    }
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
+    .metric { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; }
+    .metric-label { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.58); margin-bottom: 6px; font-weight: 600; }
+    .metric-value { font-size: 1.35rem; font-weight: 800; line-height: 1.1; }
 
-    .summary-value {
-      font-size: 2.35rem;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
+    .steps { display: flex; flex-direction: column; margin-top: 10px; counter-reset: step; }
+    .step { display: flex; align-items: baseline; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.95rem; line-height: 1.65; counter-increment: step; }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-size: 0.78rem; color: rgba(255,255,255,0.55); min-width: 22px; font-weight: 600; }
+    .step-num::before { content: counter(step) "."; }
+    .step-text { flex: 1; color: rgba(255,255,255,0.78); }
+    .step-text strong { color: white; }
+    .step-text .hi { color: var(--accent); font-weight: 700; }
 
-    .summary-sub {
-      font-size: 0.96rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    /* ── Peer Comparison ── */
+    .selector-grid { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: end; }
+    .vs-badge { text-align: center; font-size: 0.78rem; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; padding-bottom: 14px; }
 
-    .overview-text {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.78);
-      line-height: 1.75;
-    }
+    .comparison-result { display: none; flex-direction: column; gap: 14px; }
+    .comparison-result.visible { display: flex; }
 
-    .overview-text strong {
-      color: white;
-    }
+    .h2h-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .h2h-card { border-radius: 22px; padding: 24px 26px; }
+    .h2h-card.you { background: linear-gradient(135deg, rgba(30,167,255,0.14), rgba(30,167,255,0.05)); border: 1px solid rgba(30,167,255,0.35); }
+    .h2h-card.peer { background: linear-gradient(135deg, rgba(167,139,250,0.12), rgba(167,139,250,0.04)); border: 1px solid rgba(167,139,250,0.3); }
 
-    .overview-text .hi {
-      color: var(--accent);
-      font-weight: 700;
-    }
+    .h2h-tag { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
+    .h2h-card.you .h2h-tag { color: var(--accent); }
+    .h2h-card.peer .h2h-tag { color: var(--purple); }
+    .h2h-name { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; line-height: 1.2; }
+    .h2h-brand { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
 
-    .steps {
-      display: flex;
-      flex-direction: column;
-      margin-top: 10px;
-      counter-reset: step;
-    }
+    .h2h-metrics { display: flex; flex-direction: column; gap: 10px; }
+    .h2h-metric { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; }
+    .h2h-metric-label { font-size: 0.76rem; color: rgba(255,255,255,0.58); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+    .h2h-metric-value { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+    .h2h-metric-value.winning { color: var(--star5); }
+    .h2h-metric-value.losing { color: var(--danger); }
+    .h2h-metric-value.tied { color: var(--warn); }
 
-    .step {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.95rem;
-      line-height: 1.65;
-      counter-increment: step;
-    }
+    .delta-card { background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03)); border: 1px solid var(--border); border-radius: 22px; padding: 24px 26px; }
+    .delta-row { display: grid; grid-template-columns: 160px 1fr 80px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .delta-row:last-child { border-bottom: none; }
+    .delta-label { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-weight: 500; }
+    .delta-bar-wrap { position: relative; height: 8px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+    .delta-bar-fill { position: absolute; top: 0; height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .delta-bar-fill.you { background: var(--accent); }
+    .delta-bar-fill.peer-bar { background: var(--purple); }
+    .delta-value { font-size: 0.82rem; font-weight: 700; text-align: right; }
+    .delta-value.ahead { color: var(--star5); }
+    .delta-value.behind { color: var(--danger); }
+    .delta-value.even { color: var(--warn); }
 
-    .step:last-child {
-      border-bottom: none;
-    }
+    .insight-card { background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03)); border: 1px solid var(--border); border-radius: 22px; padding: 24px 26px; }
+    .insight-text { font-size: 0.96rem; color: var(--muted); line-height: 1.8; }
+    .insight-text strong { color: white; }
+    .insight-text .hi { color: var(--accent); font-weight: 700; }
+    .insight-text .hi-green { color: var(--star5); font-weight: 700; }
+    .insight-text .hi-red { color: var(--danger); font-weight: 700; }
 
-    .step-num {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.55);
-      min-width: 22px;
-      font-weight: 600;
-    }
+    .locked-card { opacity: 0.4; pointer-events: none; transition: opacity 0.2s; }
+    .locked-card.unlocked { opacity: 1; pointer-events: auto; }
 
-    .step-num::before {
-      content: counter(step) ".";
-    }
-
-    .step-text {
-      flex: 1;
-      color: rgba(255,255,255,0.78);
-    }
-
-    .step-text strong {
-      color: white;
-    }
-
-    .step-text .hi {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    @media (max-width: 800px) {
-      .input-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 900px) {
+      .two-col, .input-grid, .metric-grid, .h2h-grid { grid-template-columns: 1fr; }
+      .selector-grid { grid-template-columns: 1fr; }
+      .vs-badge { display: none; }
+      .delta-row { grid-template-columns: 110px 1fr 60px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="header">
-      <div class="logo-wrap">
-        <img src="logo.png" alt="Logo">
-      </div>
-      <h1 class="tool-title">Review Impact Calculator</h1>
-      <p class="tool-description">
-        Estimate how many additional 5-star reviews may be needed to improve your current rating and reach a target score.
-      </p>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Logo">
     </div>
+    <h1 class="tool-title">Review Impact Calculator</h1>
+    <p class="tool-description">
+      Select a location to auto-fill reputation metrics, project how many additional 5-star reviews are needed to reach a target rating, and compare performance against peers in your brand and market.
+    </p>
+  </div>
 
-    <div class="card">
-      <div class="card-label">Current Review Snapshot</div>
-      <div class="input-grid">
-        <div class="input-group">
-          <label>Total Reviews</label>
-          <input type="number" id="totalReviews" placeholder="e.g. 190" min="1">
-        </div>
-        <div class="input-group">
-          <label>Current GPA</label>
-          <input type="number" id="currentGPA" placeholder="e.g. 4.72" step="0.01" min="1" max="5">
-        </div>
+  <!-- Data status -->
+  <div class="data-bar">
+    <div class="dot" id="statusDot"></div>
+    <span id="statusText">Loading location data...</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1: REVIEW IMPACT CALCULATOR
+  ══════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-header-line"></div>
+    <div class="section-header-label">Review Impact Calculator</div>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Location Data Source</div>
+    <div class="input-grid">
+      <div class="input-group">
+        <label>Select Location</label>
+        <select id="locationSelect" onchange="handleCalcLocationChange()">
+          <option value="">Choose a franchise location</option>
+        </select>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="projection-label">Target Rating Projection</div>
-      <div class="slider-row">
-        <span style="font-size:0.85rem;color:rgba(255,255,255,0.7)">Target GPA</span>
-        <input type="range" id="target-slider" min="1" max="5" step="0.01" value="4.80" oninput="updateTargetValue()">
-        <div class="slider-val" id="target-val">4.80</div>
-      </div>
-      <div class="mini-note">
-        This projection estimates how many additional 5★ reviews are needed to reach your selected rating goal.
-      </div>
-    </div>
-
-    <button class="btn-calc" onclick="calculateProjection()">Calculate Rating Path</button>
-
-    <div class="results" id="results">
-      <div class="summary-card">
-        <div class="summary-top">
-          <div class="summary-title">Projection</div>
-          <div class="badge">5★ Reviews</div>
-        </div>
-        <div class="summary-value" id="res-needed-5">—</div>
-        <div class="summary-sub" id="res-needed-5-sub">—</div>
-      </div>
-
-      <div class="overview-card">
-        <div class="card-label">Strategic Overview</div>
-        <div class="overview-text" id="overview-text">—</div>
-      </div>
-
-      <div class="breakdown">
-        <div class="card-label">Projection Breakdown</div>
-        <div class="steps" id="steps"></div>
+      <div class="input-group">
+        <label>Data Status</label>
+        <input type="text" id="dataStatus" value="Loading..." readonly>
       </div>
     </div>
   </div>
 
-  <script>
-    function updateTargetValue() {
-      document.getElementById('target-val').textContent =
-        parseFloat(document.getElementById('target-slider').value).toFixed(2);
+  <div class="card">
+    <div class="card-label">Current Review Snapshot</div>
+    <div class="input-grid">
+      <div class="input-group">
+        <label>Total Points</label>
+        <input type="number" id="totalPoints" placeholder="e.g. 541" min="0" step="0.01">
+      </div>
+      <div class="input-group">
+        <label>3-Platform Score (GPA)</label>
+        <input type="number" id="currentGPA" placeholder="e.g. 4.72" step="0.01" min="0" max="5">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="projection-label">Target Rating Projection</div>
+    <div class="slider-row">
+      <span style="font-size:0.85rem;color:rgba(255,255,255,0.7)">Target GPA</span>
+      <input type="range" id="target-slider" min="1" max="5" step="0.01" value="4.80" oninput="updateTargetValue()">
+      <div class="slider-val" id="target-val">4.80</div>
+    </div>
+    <div class="mini-note">This projection estimates how many additional 5★ reviews are needed to reach your selected rating goal.</div>
+  </div>
+
+  <button class="btn-calc" onclick="calculateProjection()">Calculate Rating Path</button>
+
+  <div class="results" id="results">
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-title">Projection</div>
+        <div class="badge">5★ Reviews</div>
+      </div>
+      <div class="summary-value" id="res-needed-5">—</div>
+      <div class="summary-sub" id="res-needed-5-sub">—</div>
+    </div>
+
+    <div class="overview-card">
+      <div class="card-label">Strategic Overview</div>
+      <div class="overview-text" id="overview-text">—</div>
+    </div>
+
+    <div class="two-col">
+      <div class="tool-card">
+        <div class="tool-top">
+          <div class="tool-title-sm">Review Goal Planner</div>
+          <div class="badge warn">Monthly Pace</div>
+        </div>
+        <div class="tool-text" id="goalPlannerText">Select a location and calculate to view monthly planning guidance.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-top">
+          <div class="tool-title-sm">Negative Review Recovery</div>
+          <div class="badge danger">Recovery</div>
+        </div>
+        <div class="tool-text" id="recoveryText">Select a location to estimate 1★ review impact and recovery cost.</div>
+      </div>
+    </div>
+
+    <div class="breakdown">
+      <div class="card-label">Projection Breakdown</div>
+      <div class="steps" id="steps"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2: PEER COMPARISON
+  ══════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-header-line"></div>
+    <div class="section-header-label">Peer Comparison</div>
+    <div class="section-header-line"></div>
+  </div>
+
+  <!-- Step 1: Brand -->
+  <div class="card">
+    <div class="card-label">Step 1 — Select Your Brand</div>
+    <div class="input-group">
+      <label>Brand</label>
+      <select id="brandSelect" onchange="handleBrandChange()">
+        <option value="">Choose a brand</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Step 2: Location + Peer -->
+  <div class="card locked-card" id="locationCard">
+    <div class="card-label">Step 2 — Select Locations to Compare</div>
+    <div class="selector-grid">
+      <div class="input-group">
+        <label>Your Location</label>
+        <select id="youSelect" onchange="handleYouChange()" disabled>
+          <option value="">Select brand first</option>
+        </select>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="input-group">
+        <label>Peer Location <span id="peer-filter-tag" style="color:rgba(255,255,255,0.4);font-size:0.72rem;font-weight:400;"></span></label>
+        <select id="peerSelect" disabled>
+          <option value="">Select your location first</option>
+        </select>
+      </div>
+    </div>
+    <div class="filter-note" id="filterNote"></div>
+  </div>
+
+  <button class="btn-compare" id="btnCompare" onclick="runComparison()" disabled>Compare Locations</button>
+
+  <!-- Comparison results -->
+  <div class="comparison-result" id="comparisonResult">
+    <div class="h2h-grid">
+      <div class="h2h-card you">
+        <div class="h2h-tag">You</div>
+        <div class="h2h-name" id="you-name">—</div>
+        <div class="h2h-brand" id="you-brand-label">—</div>
+        <div class="h2h-metrics">
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">3-Platform Score</span>
+            <span class="h2h-metric-value" id="you-gpa">—</span>
+          </div>
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">Total Points</span>
+            <span class="h2h-metric-value" id="you-points">—</span>
+          </div>
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">Market</span>
+            <span class="h2h-metric-value" id="you-market">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="h2h-card peer">
+        <div class="h2h-tag">Peer</div>
+        <div class="h2h-name" id="peer-name">—</div>
+        <div class="h2h-brand" id="peer-brand-label">—</div>
+        <div class="h2h-metrics">
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">3-Platform Score</span>
+            <span class="h2h-metric-value" id="peer-gpa">—</span>
+          </div>
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">Total Points</span>
+            <span class="h2h-metric-value" id="peer-points">—</span>
+          </div>
+          <div class="h2h-metric">
+            <span class="h2h-metric-label">Market</span>
+            <span class="h2h-metric-value" id="peer-market">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="delta-card">
+      <div class="card-label">Head-to-Head Breakdown</div>
+      <div class="delta-row">
+        <div class="delta-label">3-Platform Score</div>
+        <div class="delta-bar-wrap">
+          <div class="delta-bar-fill you" id="bar-you-gpa" style="width:0%"></div>
+        </div>
+        <div class="delta-value" id="delta-gpa">—</div>
+      </div>
+      <div class="delta-row">
+        <div class="delta-label">Total Points</div>
+        <div class="delta-bar-wrap">
+          <div class="delta-bar-fill you" id="bar-you-points" style="width:0%"></div>
+        </div>
+        <div class="delta-value" id="delta-points">—</div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="card-label">Comparison Insight</div>
+      <div class="insight-text" id="insightText">—</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const DATA_URL = 'https://raw.githubusercontent.com/YOURUSERNAME/pfm-review-data/main/locations.json';
+
+  // ── STATE ───────────────────────────────────────────────
+  let locationData = [];
+  let calcSelectedLocation = null;
+
+  // ── DATA LOADING ────────────────────────────────────────
+  async function loadData() {
+    try {
+      const res = await fetch(DATA_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      locationData = await res.json();
+
+      // Parse numeric fields (they come as strings from Power Automate)
+      locationData = locationData.map(loc => ({
+        ...loc,
+        totalPoints: parseFloat(loc.totalPoints) || 0,
+        gpa: parseFloat(loc.gpa) || 0
+      }));
+
+      // Update status
+      document.getElementById('statusDot').classList.add('live');
+      document.getElementById('statusText').innerHTML = `<strong>${locationData.length} locations</strong> loaded live from SharePoint`;
+      document.getElementById('dataStatus').value = `${locationData.length} locations loaded`;
+
+      populateCalcDropdown();
+      populateBrandDropdown();
+
+    } catch (err) {
+      console.error('Data load failed:', err);
+      document.getElementById('statusDot').style.background = 'var(--danger)';
+      document.getElementById('statusText').innerHTML = `<strong>Could not load live data</strong> — check GitHub URL or network`;
+      document.getElementById('dataStatus').value = 'Load failed';
     }
+  }
 
-    function calculateNeeded(total, gpa, target, newStar) {
-      const currentPoints = total * gpa;
+  // ── CALCULATOR ───────────────────────────────────────────
 
-      if (newStar <= target) {
-        return null;
-      }
-
-      const rawNeeded = (target * total - currentPoints) / (newStar - target);
-
-      if (rawNeeded < 0) {
-        return {
-          needed: 0,
-          achieved: gpa,
-          total: total,
-          points: currentPoints
-        };
-      }
-
-      const needed = Math.ceil(rawNeeded);
-      const newTotal = total + needed;
-      const newPoints = currentPoints + (needed * newStar);
-      const achieved = newPoints / newTotal;
-
-      return {
-        needed,
-        achieved,
-        total: newTotal,
-        points: newPoints
-      };
-    }
-
-    function calculateProjection() {
-      const total = parseFloat(document.getElementById('totalReviews').value);
-      const gpa = parseFloat(document.getElementById('currentGPA').value);
-      const target = parseFloat(document.getElementById('target-slider').value);
-
-      if (!total || !gpa) {
-        alert('Please enter your total reviews and current GPA.');
-        return;
-      }
-
-      if (gpa < 1 || gpa > 5 || target < 1 || target > 5) {
-        alert('Ratings must be between 1 and 5.');
-        return;
-      }
-
-      if (target <= gpa) {
-        alert('Target GPA must be greater than your current GPA.');
-        return;
-      }
-
-      const fiveStar = calculateNeeded(total, gpa, target, 5);
-
-      document.getElementById('res-needed-5').textContent =
-        fiveStar ? fiveStar.needed.toLocaleString() : 'Not possible';
-      document.getElementById('res-needed-5-sub').textContent =
-        fiveStar
-          ? `Projected GPA ${fiveStar.achieved.toFixed(4)} across ${fiveStar.total.toLocaleString()} total reviews`
-          : `A 5★ average cannot raise a profile to ${target.toFixed(2)}`;
-
-      let overview = `With <strong>${total.toLocaleString()} current reviews</strong> at an average of <strong>${gpa.toFixed(2)}</strong>, reaching <strong>${target.toFixed(2)}</strong> would require approximately <span class="hi">${fiveStar.needed.toLocaleString()} additional 5★ reviews</span>. `;
-      overview += `If achieved, your profile would reach <strong>${fiveStar.achieved.toFixed(4)}</strong> across <strong>${fiveStar.total.toLocaleString()} total reviews</strong>. This provides a practical review acquisition target that can support local reputation planning and outreach efforts.`;
-
-      document.getElementById('overview-text').innerHTML = overview;
-
-      const currentPoints = total * gpa;
-      const steps = [];
-      steps.push(`<strong>Current Total Rating Points:</strong> ${total.toLocaleString()} × ${gpa.toFixed(2)} = <span class="hi">${currentPoints.toFixed(2)}</span>`);
-      steps.push(`<strong>Target GPA Selected:</strong> <span class="hi">${target.toFixed(2)}</span>`);
-      steps.push(`<strong>Using 5★ Reviews:</strong> approximately <span class="hi">${fiveStar.needed.toLocaleString()}</span> new reviews are needed`);
-      steps.push(`<strong>New Total Reviews:</strong> ${total.toLocaleString()} + ${fiveStar.needed.toLocaleString()} = <span class="hi">${fiveStar.total.toLocaleString()}</span>`);
-      steps.push(`<strong>Projected Rating Points:</strong> ${currentPoints.toFixed(2)} + (${fiveStar.needed.toLocaleString()} × 5) = <span class="hi">${fiveStar.points.toFixed(2)}</span>`);
-      steps.push(`<strong>Projected GPA:</strong> ${fiveStar.points.toFixed(2)} ÷ ${fiveStar.total.toLocaleString()} = <span class="hi">${fiveStar.achieved.toFixed(4)}</span>`);
-
-      document.getElementById('steps').innerHTML = steps.map(s =>
-        `<div class="step"><span class="step-num"></span><span class="step-text">${s}</span></div>`
-      ).join('');
-
-      document.getElementById('results').classList.add('visible');
-      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    updateTargetValue();
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Enter') calculateProjection();
+  function populateCalcDropdown() {
+    const sel = document.getElementById('locationSelect');
+    sel.innerHTML = '<option value="">Choose a franchise location</option>';
+    const sorted = [...locationData].sort((a, b) => a.office.localeCompare(b.office));
+    sorted.forEach(loc => {
+      const opt = document.createElement('option');
+      opt.value = loc.id;
+      opt.textContent = `${loc.office} — ${loc.brand}`;
+      sel.appendChild(opt);
     });
-  </script>
+  }
+
+  function handleCalcLocationChange() {
+    const id = document.getElementById('locationSelect').value;
+    calcSelectedLocation = locationData.find(l => l.id === id) || null;
+    if (!calcSelectedLocation) {
+      document.getElementById('totalPoints').value = '';
+      document.getElementById('currentGPA').value = '';
+      document.getElementById('recoveryText').textContent = 'Select a location to estimate 1★ review impact and recovery cost.';
+      document.getElementById('results').classList.remove('visible');
+      return;
+    }
+    document.getElementById('totalPoints').value = calcSelectedLocation.totalPoints;
+    document.getElementById('currentGPA').value = parseFloat(calcSelectedLocation.gpa).toFixed(2);
+    renderRecoveryPlanner(calcSelectedLocation);
+    document.getElementById('results').classList.remove('visible');
+  }
+
+  function updateTargetValue() {
+    document.getElementById('target-val').textContent =
+      parseFloat(document.getElementById('target-slider').value).toFixed(2);
+  }
+
+  function calculateNeeded(total, gpa, target, newStar = 5) {
+    if (newStar <= target) return null;
+    const currentPoints = total * gpa;
+    const rawNeeded = (target * total - currentPoints) / (newStar - target);
+    if (rawNeeded < 0) return { needed: 0, achieved: gpa, total, points: currentPoints };
+    const needed = Math.ceil(rawNeeded);
+    const newTotal = total + needed;
+    const newPoints = currentPoints + (needed * newStar);
+    return { needed, achieved: newPoints / newTotal, total: newTotal, points: newPoints };
+  }
+
+  function renderRecoveryPlanner(loc) {
+    const total = loc.totalPoints;
+    const gpa = parseFloat(loc.gpa);
+    if (!total || !gpa) {
+      document.getElementById('recoveryText').textContent = 'Insufficient data to calculate recovery.';
+      return;
+    }
+    const currentPoints = total * gpa;
+    const newTotalAfterBad = total + 1;
+    const newPointsAfterBad = currentPoints + 1;
+    const newGpaAfterBad = newPointsAfterBad / newTotalAfterBad;
+    const recoverNeeded = calculateNeeded(newTotalAfterBad, newGpaAfterBad, gpa, 5);
+    document.getElementById('recoveryText').innerHTML =
+      `If <strong>${loc.office}</strong> received one new <strong>1★ review</strong>, its average would move from <strong>${gpa.toFixed(2)}</strong> to <strong>${newGpaAfterBad.toFixed(4)}</strong>. Returning to the current average would require approximately <span class="hi">${recoverNeeded.needed.toLocaleString()} additional 5★ reviews</span>.`;
+  }
+
+  function renderGoalPlanner(loc, totalNeeded) {
+    const monthlyNeeded = Math.ceil(totalNeeded / 3);
+    document.getElementById('goalPlannerText').innerHTML =
+      `A practical benchmark would be approximately <span class="hi">${monthlyNeeded.toLocaleString()} 5★ reviews per month for the next 90 days</span> to stay on pace toward the target rating.`;
+  }
+
+  function calculateProjection() {
+    const total = parseFloat(document.getElementById('totalPoints').value);
+    const gpa = parseFloat(document.getElementById('currentGPA').value);
+    const target = parseFloat(document.getElementById('target-slider').value);
+
+    if (!total || !gpa) { alert('Please select a location or enter Total Points and GPA.'); return; }
+    if (gpa < 0 || gpa > 5 || target < 0 || target > 5) { alert('Ratings must be between 0 and 5.'); return; }
+    if (target <= gpa) { alert('Target GPA must be greater than your current GPA.'); return; }
+
+    const fiveStar = calculateNeeded(total, gpa, target, 5);
+    const locationName = calcSelectedLocation ? calcSelectedLocation.office : 'This location';
+
+    document.getElementById('res-needed-5').textContent = fiveStar ? fiveStar.needed.toLocaleString() : 'Not possible';
+    document.getElementById('res-needed-5-sub').textContent = fiveStar
+      ? `Projected GPA ${fiveStar.achieved.toFixed(4)} across ${fiveStar.total.toLocaleString()} total points`
+      : `A 5★ average cannot raise this profile to ${target.toFixed(2)}`;
+
+    document.getElementById('overview-text').innerHTML =
+      `<strong>${locationName}</strong> currently has <strong>${total.toLocaleString()} total points</strong> at an average of <strong>${gpa.toFixed(2)}</strong>. ` +
+      `To reach <strong>${target.toFixed(2)}</strong>, the profile needs approximately <span class="hi">${fiveStar.needed.toLocaleString()} additional 5★ reviews</span>. ` +
+      `If achieved, the rating would project to <strong>${fiveStar.achieved.toFixed(4)}</strong>.`;
+
+    const currentPoints = total * gpa;
+    const steps = [
+      `<strong>Current Total Rating Points:</strong> ${total.toLocaleString()} × ${gpa.toFixed(2)} = <span class="hi">${currentPoints.toFixed(2)}</span>`,
+      `<strong>Target GPA Selected:</strong> <span class="hi">${target.toFixed(2)}</span>`,
+      `<strong>Additional 5★ Reviews Needed:</strong> <span class="hi">${fiveStar.needed.toLocaleString()}</span>`,
+      `<strong>New Total Points:</strong> ${total.toLocaleString()} + ${fiveStar.needed.toLocaleString()} = <span class="hi">${fiveStar.total.toLocaleString()}</span>`,
+      `<strong>Projected Rating Points:</strong> ${currentPoints.toFixed(2)} + (${fiveStar.needed.toLocaleString()} × 5) = <span class="hi">${fiveStar.points.toFixed(2)}</span>`,
+      `<strong>Projected GPA:</strong> ${fiveStar.points.toFixed(2)} ÷ ${fiveStar.total.toLocaleString()} = <span class="hi">${fiveStar.achieved.toFixed(4)}</span>`
+    ];
+
+    document.getElementById('steps').innerHTML = steps.map(s =>
+      `<div class="step"><span class="step-num"></span><span class="step-text">${s}</span></div>`
+    ).join('');
+
+    if (calcSelectedLocation) renderGoalPlanner(calcSelectedLocation, fiveStar.needed);
+
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── PEER COMPARISON ──────────────────────────────────────
+
+  function populateBrandDropdown() {
+    const brands = [...new Set(locationData.map(l => l.brand))].filter(Boolean).sort();
+    const sel = document.getElementById('brandSelect');
+    sel.innerHTML = '<option value="">Choose a brand</option>';
+    brands.forEach(b => {
+      const opt = document.createElement('option');
+      opt.value = b;
+      opt.textContent = b;
+      sel.appendChild(opt);
+    });
+  }
+
+  function handleBrandChange() {
+    const brand = document.getElementById('brandSelect').value;
+    const locationCard = document.getElementById('locationCard');
+    const youSel = document.getElementById('youSelect');
+    const peerSel = document.getElementById('peerSelect');
+    const btnCompare = document.getElementById('btnCompare');
+
+    youSel.innerHTML = '<option value="">Choose your location</option>';
+    peerSel.innerHTML = '<option value="">Select your location first</option>';
+    youSel.disabled = true;
+    peerSel.disabled = true;
+    btnCompare.disabled = true;
+    document.getElementById('comparisonResult').classList.remove('visible');
+    document.getElementById('filterNote').textContent = '';
+    document.getElementById('peer-filter-tag').textContent = '';
+
+    if (!brand) {
+      locationCard.classList.remove('unlocked');
+      return;
+    }
+
+    const inBrand = locationData.filter(l => l.brand === brand).sort((a, b) => a.office.localeCompare(b.office));
+
+    inBrand.forEach(loc => {
+      const opt = document.createElement('option');
+      opt.value = loc.id;
+      opt.textContent = loc.office;
+      youSel.appendChild(opt);
+    });
+
+    youSel.disabled = false;
+    locationCard.classList.add('unlocked');
+  }
+
+  function handleYouChange() {
+    const youId = document.getElementById('youSelect').value;
+    const peerSel = document.getElementById('peerSelect');
+    const btnCompare = document.getElementById('btnCompare');
+
+    peerSel.innerHTML = '<option value="">Choose a peer location</option>';
+    peerSel.disabled = true;
+    btnCompare.disabled = true;
+    document.getElementById('comparisonResult').classList.remove('visible');
+    document.getElementById('filterNote').textContent = '';
+    document.getElementById('peer-filter-tag').textContent = '';
+
+    if (!youId) return;
+
+    const you = locationData.find(l => l.id === youId);
+    if (!you) return;
+
+    // Filter peers: same brand, not self. If market known, prefer same market
+    const sameBrandPeers = locationData.filter(l => l.id !== youId && l.brand === you.brand);
+    const sameMarketPeers = sameBrandPeers.filter(l => l.market === you.market && you.market !== 'UNK');
+    const peers = sameMarketPeers.length > 0 ? sameMarketPeers : sameBrandPeers;
+
+    const marketLabel = you.market === 'UNK' ? 'Unknown market' : you.market;
+    document.getElementById('peer-filter-tag').textContent = `(${you.brand} · ${marketLabel})`;
+
+    if (peers.length === 0) {
+      peerSel.innerHTML = '<option value="">No peers found</option>';
+      document.getElementById('filterNote').textContent = `No other ${you.brand} locations found.`;
+      return;
+    }
+
+    peers.sort((a, b) => a.office.localeCompare(b.office)).forEach(loc => {
+      const opt = document.createElement('option');
+      opt.value = loc.id;
+      opt.textContent = `${loc.office} (${loc.market})`;
+      peerSel.appendChild(opt);
+    });
+
+    peerSel.disabled = false;
+
+    const scopeNote = sameMarketPeers.length > 0
+      ? `Showing ${peers.length} peer${peers.length > 1 ? 's' : ''} in ${you.brand} · ${marketLabel} market.`
+      : `Market unknown — showing all ${peers.length} ${you.brand} brand peers.`;
+    document.getElementById('filterNote').textContent = scopeNote;
+
+    peerSel.onchange = () => { btnCompare.disabled = !peerSel.value; };
+  }
+
+  function runComparison() {
+    const youId = document.getElementById('youSelect').value;
+    const peerId = document.getElementById('peerSelect').value;
+    if (!youId || !peerId) return;
+
+    const you = locationData.find(l => l.id === youId);
+    const peer = locationData.find(l => l.id === peerId);
+
+    document.getElementById('you-name').textContent = you.office;
+    document.getElementById('you-brand-label').textContent = `${you.brand} · ${you.market === 'UNK' ? 'Unknown Market' : you.market + ' Market'}`;
+    document.getElementById('peer-name').textContent = peer.office;
+    document.getElementById('peer-brand-label').textContent = `${peer.brand} · ${peer.market === 'UNK' ? 'Unknown Market' : peer.market + ' Market'}`;
+
+    const youGpa = parseFloat(you.gpa);
+    const peerGpa = parseFloat(peer.gpa);
+    const youPts = parseFloat(you.totalPoints);
+    const peerPts = parseFloat(peer.totalPoints);
+
+    // GPA
+    const gpaWin = youGpa >= peerGpa;
+    const gpaTied = youGpa === peerGpa;
+    document.getElementById('you-gpa').textContent = youGpa.toFixed(2);
+    document.getElementById('you-gpa').className = 'h2h-metric-value ' + (gpaTied ? 'tied' : gpaWin ? 'winning' : 'losing');
+    document.getElementById('peer-gpa').textContent = peerGpa.toFixed(2);
+    document.getElementById('peer-gpa').className = 'h2h-metric-value ' + (gpaTied ? 'tied' : !gpaWin ? 'winning' : 'losing');
+
+    // Points
+    const ptWin = youPts >= peerPts;
+    const ptTied = youPts === peerPts;
+    document.getElementById('you-points').textContent = youPts.toLocaleString();
+    document.getElementById('you-points').className = 'h2h-metric-value ' + (ptTied ? 'tied' : ptWin ? 'winning' : 'losing');
+    document.getElementById('peer-points').textContent = peerPts.toLocaleString();
+    document.getElementById('peer-points').className = 'h2h-metric-value ' + (ptTied ? 'tied' : !ptWin ? 'winning' : 'losing');
+
+    // Market
+    document.getElementById('you-market').textContent = you.market === 'UNK' ? 'Unknown' : you.market;
+    document.getElementById('peer-market').textContent = peer.market === 'UNK' ? 'Unknown' : peer.market;
+
+    // Delta bars
+    const maxGpa = Math.max(youGpa, peerGpa, 0.01);
+    const maxPts = Math.max(youPts, peerPts, 1);
+    document.getElementById('bar-you-gpa').style.width = ((youGpa / maxGpa) * 100).toFixed(1) + '%';
+    document.getElementById('bar-you-points').style.width = ((youPts / maxPts) * 100).toFixed(1) + '%';
+
+    const gpaDelta = (youGpa - peerGpa).toFixed(2);
+    const ptsDelta = (youPts - peerPts).toFixed(2);
+
+    const gpaEl = document.getElementById('delta-gpa');
+    gpaEl.textContent = gpaDelta > 0 ? `+${gpaDelta}` : gpaDelta == 0 ? 'Even' : gpaDelta;
+    gpaEl.className = 'delta-value ' + (gpaDelta > 0 ? 'ahead' : gpaDelta == 0 ? 'even' : 'behind');
+
+    const ptsEl = document.getElementById('delta-points');
+    ptsEl.textContent = ptsDelta > 0 ? `+${ptsDelta}` : ptsDelta == 0 ? 'Even' : ptsDelta;
+    ptsEl.className = 'delta-value ' + (ptsDelta > 0 ? 'ahead' : ptsDelta == 0 ? 'even' : 'behind');
+
+    // Insight
+    const youName = `<strong>${you.office}</strong>`;
+    const peerName = `<strong>${peer.office}</strong>`;
+    let insight = '';
+
+    if (gpaDelta > 0 && ptsDelta > 0) {
+      insight = `${youName} leads ${peerName} on both metrics — a <span class="hi-green">+${gpaDelta} score advantage</span> and <span class="hi-green">+${ptsDelta} more points</span>.`;
+    } else if (gpaDelta < 0 && ptsDelta < 0) {
+      insight = `${peerName} currently leads on both the 3-Platform Score (<span class="hi-red">${Math.abs(gpaDelta)} gap</span>) and Total Points (<span class="hi-red">${Math.abs(ptsDelta)} gap</span>). Closing either gap would improve ${you.office}'s standing.`;
+    } else if (gpaDelta > 0 && ptsDelta < 0) {
+      insight = `${youName} has a higher 3-Platform Score (<span class="hi-green">+${gpaDelta}</span>) but trails on Total Points (<span class="hi-red">${ptsDelta}</span>). Score quality is strong — volume is the opportunity.`;
+    } else if (gpaDelta < 0 && ptsDelta > 0) {
+      insight = `${youName} leads on Total Points (<span class="hi-green">+${ptsDelta}</span>) but trails on 3-Platform Score (<span class="hi-red">${gpaDelta}</span>). More activity, but score quality has room to improve.`;
+    } else {
+      insight = `${youName} and ${peerName} are evenly matched across both metrics.`;
+    }
+
+    document.getElementById('insightText').innerHTML = insight;
+    document.getElementById('comparisonResult').classList.add('visible');
+    document.getElementById('comparisonResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── INIT ─────────────────────────────────────────────────
+  updateTargetValue();
+  loadData();
+
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') calculateProjection(); });
+</script>
 </body>
 </html>
