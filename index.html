@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Premier Pools & Spas - Review Impact Calculator</title>
+  <title>Review Impact Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0d2b4c;
       --surface: #12365d;
-      --surface-2: #173f6b;
       --border: rgba(255,255,255,0.12);
       --accent: #1ea7ff;
       --accent-dark: #108fe0;
       --text: #ffffff;
       --muted: rgba(255,255,255,0.72);
-      --soft: rgba(255,255,255,0.08);
-      --gold: #c79a3b;
       --green: #66d39b;
       --red: #ff7676;
-
-      --star1: #ff6b6b;
-      --star2: #ff9b6b;
-      --star3: #ffd166;
       --star4: #9ad96b;
       --star5: #59d7a7;
     }
@@ -42,11 +35,10 @@
     }
 
     .page {
-      max-width: 980px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    /* Simple Header */
     .header {
       text-align: center;
       margin-bottom: 40px;
@@ -67,7 +59,7 @@
     }
 
     .tool-title {
-      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-size: clamp(2.1rem, 5vw, 3.8rem);
       line-height: 1.02;
       font-weight: 800;
       letter-spacing: -0.04em;
@@ -82,12 +74,6 @@
       line-height: 1.7;
     }
 
-    .calculator-shell {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
     .card {
       width: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
@@ -96,6 +82,7 @@
       padding: 26px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       backdrop-filter: blur(8px);
+      margin-bottom: 14px;
     }
 
     .card-label {
@@ -147,178 +134,68 @@
       box-shadow: 0 0 0 4px rgba(30,167,255,0.14);
     }
 
-    .mode-toggle {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .mode-btn {
-      flex: 1;
-      padding: 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: transparent;
-      color: rgba(255,255,255,0.72);
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+    .projection-label {
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.18s ease;
-    }
-
-    .mode-btn.active.add {
-      background: rgba(102,211,155,0.14);
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    .mode-btn.active.remove {
-      background: rgba(255,118,118,0.14);
-      border-color: var(--red);
-      color: var(--red);
-    }
-
-    #review-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      color: rgba(255,255,255,0.65);
       margin-bottom: 14px;
+      font-weight: 600;
     }
 
-    .review-row {
-      display: grid;
-      grid-template-columns: 1fr auto 40px;
-      gap: 10px;
-      align-items: center;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      padding: 12px 14px;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .review-row:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(30,167,255,0.12);
-    }
-
-    .review-row-inputs {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .rr-count input {
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      outline: none;
-      width: 100%;
-    }
-
-    .rr-count input::placeholder {
-      color: rgba(255,255,255,0.45);
-    }
-
-    .rr-stars {
+    .rating-choice-row {
       display: flex;
-      gap: 6px;
+      gap: 10px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
 
-    .rr-star-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
+    .rating-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 14px 12px;
+      border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.14);
       background: transparent;
       color: rgba(255,255,255,0.72);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.12s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .rr-star-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .rr-star-btn.s1.active { border-color: var(--star1); background: rgba(255,107,107,0.15); color: var(--star1); }
-    .rr-star-btn.s2.active { border-color: var(--star2); background: rgba(255,155,107,0.15); color: var(--star2); }
-    .rr-star-btn.s3.active { border-color: var(--star3); background: rgba(255,209,102,0.15); color: var(--star3); }
-    .rr-star-btn.s4.active { border-color: var(--star4); background: rgba(154,217,107,0.15); color: var(--star4); }
-    .rr-star-btn.s5.active { border-color: var(--star5); background: rgba(89,215,167,0.15); color: var(--star5); }
-
-    .row-delete {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: rgba(255,255,255,0.58);
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.12s ease;
-    }
-
-    .row-delete:hover {
-      color: var(--red);
-      border-color: var(--red);
-      background: rgba(255,118,118,0.08);
-    }
-
-    .btn-add-row {
-      width: 100%;
-      padding: 13px;
-      background: rgba(255,255,255,0.03);
-      border: 1px dashed rgba(255,255,255,0.18);
-      border-radius: 14px;
-      color: rgba(255,255,255,0.8);
       font-family: 'Poppins', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.16s ease;
+      transition: all 0.14s ease;
+      text-align: center;
     }
 
-    .btn-add-row:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(30,167,255,0.05);
+    .rating-btn.s4.active {
+      border-color: var(--star4);
+      background: rgba(154,217,107,0.12);
+      color: var(--star4);
     }
 
-    .batch-summary {
+    .rating-btn.s5.active {
+      border-color: var(--star5);
+      background: rgba(89,215,167,0.12);
+      color: var(--star5);
+    }
+
+    .slider-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.86rem;
-      color: rgba(255,255,255,0.72);
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
     }
 
-    .batch-summary .hi {
-      color: white;
-      font-weight: 600;
+    .slider-row input[type=range] {
+      flex: 1;
+      accent-color: var(--accent);
+    }
+
+    .slider-val {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 62px;
+      text-align: right;
     }
 
     .btn-calc {
@@ -336,6 +213,7 @@
       cursor: pointer;
       transition: all 0.18s ease;
       box-shadow: 0 14px 34px rgba(30,167,255,0.22);
+      margin-bottom: 14px;
     }
 
     .btn-calc:hover {
@@ -344,7 +222,6 @@
     }
 
     .results {
-      width: 100%;
       display: none;
       flex-direction: column;
       gap: 14px;
@@ -356,8 +233,7 @@
 
     .result-strip {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: stretch;
+      grid-template-columns: 1fr 1fr 1fr;
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
@@ -370,16 +246,11 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      border-right: 1px solid rgba(255,255,255,0.1);
     }
 
-    .result-col.center {
-      background: rgba(255,255,255,0.04);
-      border-left: 1px solid rgba(255,255,255,0.1);
-      border-right: 1px solid rgba(255,255,255,0.1);
-      align-items: center;
-      justify-content: center;
-      padding: 24px 18px;
-      min-width: 180px;
+    .result-col:last-child {
+      border-right: none;
     }
 
     .result-col-label {
@@ -391,39 +262,20 @@
     }
 
     .result-col-value {
-      font-size: 2.35rem;
+      font-size: 2.2rem;
       line-height: 1;
       font-weight: 800;
       letter-spacing: -0.03em;
     }
 
     .result-col-sub {
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--muted);
       margin-top: 2px;
+      line-height: 1.5;
     }
 
-    .arrow-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-top: 6px;
-      text-align: center;
-    }
-
-    .delta {
-      font-size: 1.9rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .delta.up { color: var(--green); }
-    .delta.down { color: var(--red); }
-    .delta.flat { color: rgba(255,255,255,0.65); }
-
-    .breakdown,
-    .whatif {
+    .breakdown {
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
@@ -478,85 +330,31 @@
       font-weight: 700;
     }
 
-    .whatif-label {
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 14px;
-      font-weight: 600;
+    .insight-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px 26px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
     }
 
-    .wi-star-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+    .insight-text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.75;
     }
 
-    .wi-star-btn {
-      flex: 1;
-      min-width: 62px;
-      padding: 10px 8px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: transparent;
-      color: rgba(255,255,255,0.72);
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.12s ease;
-      text-align: center;
-    }
-
-    .wi-star-btn.s1.active { border-color: var(--star1); background: rgba(255,107,107,0.12); color: var(--star1); }
-    .wi-star-btn.s2.active { border-color: var(--star2); background: rgba(255,155,107,0.12); color: var(--star2); }
-    .wi-star-btn.s3.active { border-color: var(--star3); background: rgba(255,209,102,0.12); color: var(--star3); }
-    .wi-star-btn.s4.active { border-color: var(--star4); background: rgba(154,217,107,0.12); color: var(--star4); }
-    .wi-star-btn.s5.active { border-color: var(--star5); background: rgba(89,215,167,0.12); color: var(--star5); }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 12px;
-    }
-
-    .slider-row input[type=range] {
-      flex: 1;
-      accent-color: var(--accent);
-    }
-
-    .slider-val {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--accent);
-      min-width: 62px;
-      text-align: right;
-    }
-
-    .whatif-result {
-      font-size: 0.96rem;
-      color: rgba(255,255,255,0.76);
-      line-height: 1.7;
-    }
-
-    .whatif-result strong {
+    .insight-text strong {
       color: white;
     }
 
-    .whatif-result .hi {
+    .insight-text .hi {
       color: var(--accent);
       font-weight: 700;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 800px) {
       .input-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .review-row-inputs {
         grid-template-columns: 1fr;
       }
 
@@ -564,320 +362,168 @@
         grid-template-columns: 1fr;
       }
 
-      .result-col.center {
-        border-left: none;
+      .result-col {
         border-right: none;
-        border-top: 1px solid rgba(255,255,255,0.1);
         border-bottom: 1px solid rgba(255,255,255,0.1);
       }
-    }
 
-    @media (max-width: 640px) {
-      body {
-        padding: 20px 14px 40px;
-      }
-
-      .header {
-        margin-bottom: 28px;
-      }
-
-      .mode-toggle {
-        flex-direction: column;
+      .result-col:last-child {
+        border-bottom: none;
       }
     }
   </style>
 </head>
 <body>
   <div class="page">
-
     <div class="header">
       <div class="logo-wrap">
-        <img src="logo.png" alt="Premier Pools & Spas Logo">
+        <img src="logo.png" alt="Logo">
       </div>
       <h1 class="tool-title">Review Impact Calculator</h1>
       <p class="tool-description">
-        Quickly estimate how adding or removing reviews affects your overall rating, and use the What-If section to see how many new reviews may be needed to reach a target score.
+        Estimate how many additional high-quality reviews are needed to raise your current rating and reach a target score.
       </p>
     </div>
 
-    <div class="calculator-shell">
+    <div class="card">
+      <div class="card-label">Current Review Snapshot</div>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Total Reviews</label>
+          <input type="number" id="totalReviews" placeholder="e.g. 190" min="1">
+        </div>
+        <div class="input-group">
+          <label>Current GPA</label>
+          <input type="number" id="currentGPA" placeholder="e.g. 4.72" step="0.01" min="1" max="5">
+        </div>
+      </div>
+    </div>
 
-      <div class="card">
-        <div class="card-label">Current Review Snapshot</div>
-        <div class="input-grid">
-          <div class="input-group">
-            <label>Total Reviews</label>
-            <input type="number" id="totalReviews" placeholder="e.g. 190" min="1">
-          </div>
-          <div class="input-group">
-            <label>Current GPA</label>
-            <input type="number" id="currentGPA" placeholder="e.g. 4.91" step="0.01" min="1" max="5">
-          </div>
+    <div class="card">
+      <div class="projection-label">Target Rating Projection</div>
+
+      <div class="rating-choice-row">
+        <button class="rating-btn s4" id="btn-4star" onclick="setProjectionStar(4)">Using Additional 4★ Reviews</button>
+        <button class="rating-btn s5 active" id="btn-5star" onclick="setProjectionStar(5)">Using Additional 5★ Reviews</button>
+      </div>
+
+      <div class="slider-row">
+        <span style="font-size:0.85rem;color:rgba(255,255,255,0.7)">Target GPA</span>
+        <input type="range" id="target-slider" min="1" max="5" step="0.01" value="4.80" oninput="updateTargetValue()">
+        <div class="slider-val" id="target-val">4.80</div>
+      </div>
+    </div>
+
+    <button class="btn-calc" onclick="calculateProjection()">Calculate Rating Path</button>
+
+    <div class="results" id="results">
+      <div class="result-strip">
+        <div class="result-col">
+          <div class="result-col-label">Current Rating</div>
+          <div class="result-col-value" id="res-current">—</div>
+          <div class="result-col-sub" id="res-current-sub">— reviews</div>
+        </div>
+        <div class="result-col">
+          <div class="result-col-label">Target Rating</div>
+          <div class="result-col-value" id="res-target">—</div>
+          <div class="result-col-sub" id="res-target-sub">Projection goal</div>
+        </div>
+        <div class="result-col">
+          <div class="result-col-label">Additional Reviews Needed</div>
+          <div class="result-col-value" id="res-needed">—</div>
+          <div class="result-col-sub" id="res-needed-sub">—</div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-label">Simulate a Change</div>
-
-        <div class="mode-toggle">
-          <button class="mode-btn add active" id="btn-add" onclick="setMode('add')">＋ Adding Reviews</button>
-          <button class="mode-btn remove" id="btn-remove" onclick="setMode('remove')">− Removing Reviews</button>
-        </div>
-
-        <div id="review-rows"></div>
-
-        <button class="btn-add-row" onclick="addRow()">＋ Add another star rating</button>
-
-        <div class="batch-summary">
-          <span id="summary-text">—</span>
-          <span id="summary-pts"></span>
-        </div>
+      <div class="insight-box">
+        <div class="card-label">Strategic Insight</div>
+        <div class="insight-text" id="insight-text">—</div>
       </div>
 
-      <button class="btn-calc" onclick="calculate()">Calculate Impact</button>
-
-      <div class="results" id="results">
-
-        <div class="result-strip">
-          <div class="result-col">
-            <div class="result-col-label">Before</div>
-            <div class="result-col-value" id="res-before">—</div>
-            <div class="result-col-sub" id="res-before-vol">— reviews</div>
-          </div>
-
-          <div class="result-col center">
-            <div class="delta" id="res-delta">—</div>
-            <div class="arrow-label" id="res-delta-label">change</div>
-          </div>
-
-          <div class="result-col" style="text-align:right">
-            <div class="result-col-label">After</div>
-            <div class="result-col-value" id="res-after">—</div>
-            <div class="result-col-sub" id="res-after-vol">— reviews</div>
-          </div>
-        </div>
-
-        <div class="breakdown">
-          <div class="card-label">Calculation Breakdown</div>
-          <div class="steps" id="steps"></div>
-        </div>
-
-        <div class="whatif">
-          <div class="whatif-label">What-If: How many additional reviews of a given rating to reach a target GPA?</div>
-          <div class="wi-star-row">
-            <button class="wi-star-btn s1" onclick="setWiStar(1)">1★</button>
-            <button class="wi-star-btn s2" onclick="setWiStar(2)">2★</button>
-            <button class="wi-star-btn s3" onclick="setWiStar(3)">3★</button>
-            <button class="wi-star-btn s4" onclick="setWiStar(4)">4★</button>
-            <button class="wi-star-btn s5 active" onclick="setWiStar(5)">5★</button>
-          </div>
-
-          <div class="slider-row">
-            <span style="font-size:0.8rem;color:rgba(255,255,255,0.7)">Target</span>
-            <input type="range" id="target-slider" min="1" max="5" step="0.01" value="4.8" oninput="updateWhatif()">
-            <div class="slider-val" id="target-val">4.80</div>
-          </div>
-
-          <div class="whatif-result" id="whatif-result">—</div>
-        </div>
-
+      <div class="breakdown">
+        <div class="card-label">Projection Breakdown</div>
+        <div class="steps" id="steps"></div>
       </div>
     </div>
   </div>
 
   <script>
-    let mode = 'add';
-    let wiStar = 5;
-    let lastCalc = null;
-    let rowId = 0;
+    let projectionStar = 5;
 
-    function setMode(m) {
-      mode = m;
-      document.getElementById('btn-add').classList.toggle('active', m === 'add');
-      document.getElementById('btn-remove').classList.toggle('active', m === 'remove');
-      updateBatchSummary();
+    function setProjectionStar(star) {
+      projectionStar = star;
+      document.getElementById('btn-4star').classList.toggle('active', star === 4);
+      document.getElementById('btn-5star').classList.toggle('active', star === 5);
     }
 
-    function addRow(defaultStar = 5) {
-      const id = ++rowId;
-      const div = document.createElement('div');
-      div.className = 'review-row';
-      div.id = 'row-' + id;
-      div.dataset.star = defaultStar;
-      div.innerHTML = `
-        <div class="review-row-inputs">
-          <div class="rr-count">
-            <input type="number" min="0" placeholder="# of reviews" id="rc-${id}" oninput="updateBatchSummary()">
-          </div>
-          <div class="rr-stars">
-            ${[1,2,3,4,5].map(n =>
-              `<button type="button" class="rr-star-btn s${n}${n===defaultStar?' active':''}" onclick="setRowStar(${id},${n})">${n}</button>`
-            ).join('')}
-          </div>
-        </div>
-        <div></div>
-        <button type="button" class="row-delete" onclick="deleteRow(${id})" title="Remove row">×</button>
-      `;
-      document.getElementById('review-rows').appendChild(div);
-      document.getElementById('rc-' + id).focus();
-      updateBatchSummary();
+    function updateTargetValue() {
+      document.getElementById('target-val').textContent =
+        parseFloat(document.getElementById('target-slider').value).toFixed(2);
     }
 
-    function setRowStar(id, star) {
-      const row = document.getElementById('row-' + id);
-      row.dataset.star = star;
-      row.querySelectorAll('.rr-star-btn').forEach((b, i) => b.classList.toggle('active', i + 1 === star));
-      updateBatchSummary();
-    }
-
-    function deleteRow(id) {
-      const rows = document.getElementById('review-rows');
-      if (rows.children.length <= 1) return;
-      document.getElementById('row-' + id).remove();
-      updateBatchSummary();
-    }
-
-    function getRows() {
-      return Array.from(document.getElementById('review-rows').children).map(row => {
-        const rid = row.id.split('-')[1];
-        return {
-          count: parseFloat(document.getElementById('rc-' + rid).value) || 0,
-          star: parseInt(row.dataset.star)
-        };
-      }).filter(r => r.count > 0);
-    }
-
-    function updateBatchSummary() {
-      const rows = getRows();
-      const totalCount = rows.reduce((s, r) => s + r.count, 0);
-      const totalPoints = rows.reduce((s, r) => s + r.count * r.star, 0);
-      const verb = mode === 'add' ? 'Adding' : 'Removing';
-
-      document.getElementById('summary-text').innerHTML =
-        totalCount > 0 ? `<span class="hi">${verb} ${totalCount.toLocaleString()} reviews</span>` : '—';
-
-      document.getElementById('summary-pts').textContent =
-        totalCount > 0 ? `${totalPoints.toLocaleString()} pts` : '';
-    }
-
-    function setWiStar(n) {
-      wiStar = n;
-      document.querySelectorAll('.wi-star-btn').forEach((b, i) => b.classList.toggle('active', i + 1 === n));
-      if (lastCalc) updateWhatif();
-    }
-
-    function calculate() {
+    function calculateProjection() {
       const total = parseFloat(document.getElementById('totalReviews').value);
       const gpa = parseFloat(document.getElementById('currentGPA').value);
+      const target = parseFloat(document.getElementById('target-slider').value);
 
       if (!total || !gpa) {
-        alert('Please enter your current total reviews and GPA.');
+        alert('Please enter your total reviews and current GPA.');
         return;
       }
 
-      if (gpa < 1 || gpa > 5) {
-        alert('GPA must be between 1 and 5.');
+      if (gpa < 1 || gpa > 5 || target < 1 || target > 5) {
+        alert('Ratings must be between 1 and 5.');
         return;
       }
 
-      const rows = getRows();
-      if (rows.length === 0) {
-        alert('Please enter at least one review count.');
+      if (target <= gpa) {
+        alert('Target GPA must be greater than your current GPA.');
         return;
       }
 
-      const totalPoints = total * gpa;
-      const addedCount = rows.reduce((s, r) => s + r.count, 0);
-      const addedPoints = rows.reduce((s, r) => s + r.count * r.star, 0);
-
-      if (mode === 'remove' && addedCount > total) {
-        alert("Can't remove more reviews than exist.");
+      if (projectionStar <= target) {
+        alert('To raise your GPA, the added review rating must be higher than the target GPA.');
         return;
       }
 
-      const newTotal = mode === 'add' ? total + addedCount : total - addedCount;
-      const newPoints = mode === 'add' ? totalPoints + addedPoints : totalPoints - addedPoints;
-      const newGPA = newTotal > 0 ? newPoints / newTotal : 0;
-      const delta = newGPA - gpa;
+      const currentPoints = total * gpa;
+      const rawNeeded = (target * total - currentPoints) / (projectionStar - target);
+      const needed = Math.ceil(rawNeeded);
+      const newTotal = total + needed;
+      const newPoints = currentPoints + (needed * projectionStar);
+      const achieved = newPoints / newTotal;
 
-      lastCalc = { total, gpa, totalPoints, newPoints, newTotal, newGPA, delta };
+      document.getElementById('res-current').textContent = gpa.toFixed(2);
+      document.getElementById('res-current-sub').textContent = `${total.toLocaleString()} reviews`;
 
-      document.getElementById('res-before').textContent = gpa.toFixed(2);
-      document.getElementById('res-before-vol').textContent = total.toLocaleString() + ' reviews';
-      document.getElementById('res-after').textContent = newGPA.toFixed(2);
-      document.getElementById('res-after-vol').textContent = newTotal.toLocaleString() + ' reviews';
+      document.getElementById('res-target').textContent = target.toFixed(2);
+      document.getElementById('res-target-sub').textContent = `Goal using ${projectionStar}★ reviews`;
 
-      const deltaEl = document.getElementById('res-delta');
-      const sign = delta >= 0 ? '+' : '';
-      deltaEl.textContent = sign + delta.toFixed(4);
-      deltaEl.className = 'delta ' + (Math.abs(delta) < 0.000049 ? 'flat' : delta > 0 ? 'up' : 'down');
-      document.getElementById('res-delta-label').textContent =
-        delta > 0 ? '▲ increase' : delta < 0 ? '▼ decrease' : 'no change';
+      document.getElementById('res-needed').textContent = needed.toLocaleString();
+      document.getElementById('res-needed-sub').textContent = `${projectionStar}★ reviews required`;
 
-      const verb = mode === 'add' ? 'Added' : 'Removed';
-      const op = mode === 'add' ? '+' : '−';
+      document.getElementById('insight-text').innerHTML =
+        `To move from <strong>${gpa.toFixed(2)}</strong> to <strong>${target.toFixed(2)}</strong>, you would need approximately <span class="hi">${needed.toLocaleString()} additional ${projectionStar}★ reviews</span>. If achieved, your profile would reach <strong>${achieved.toFixed(4)}</strong> across <strong>${newTotal.toLocaleString()} total reviews</strong>. This helps translate a rating goal into a clearer review acquisition target for local reputation planning.`;
+
       const steps = [];
-
-      steps.push(`<strong>Original Total Points:</strong> ${total.toLocaleString()} × ${gpa} = <span class="hi">${totalPoints.toFixed(2)}</span>`);
-
-      if (rows.length === 1) {
-        steps.push(`<strong>Points ${verb}:</strong> ${rows[0].count.toLocaleString()} reviews × ${rows[0].star}★ = <span class="hi">${(rows[0].count * rows[0].star).toFixed(1)}</span>`);
-      } else {
-        const parts = rows.map(r => `(${r.count.toLocaleString()} × ${r.star}★)`).join(' + ');
-        const vals = rows.map(r => (r.count * r.star).toFixed(1)).join(' + ');
-        steps.push(`<strong>Points ${verb}:</strong> ${parts} = ${vals} = <span class="hi">${addedPoints.toFixed(1)}</span>`);
-      }
-
-      steps.push(`<strong>New Total Points:</strong> ${totalPoints.toFixed(2)} ${op} ${addedPoints.toFixed(1)} = <span class="hi">${newPoints.toFixed(2)}</span>`);
-      steps.push(`<strong>New Review Count:</strong> ${total.toLocaleString()} ${op} ${addedCount.toLocaleString()} = <span class="hi">${newTotal.toLocaleString()}</span>`);
-      steps.push(`<strong>New GPA:</strong> ${newPoints.toFixed(2)} ÷ ${newTotal.toLocaleString()} = <span class="hi">${newGPA.toFixed(4)}</span>`);
+      steps.push(`<strong>Current Total Rating Points:</strong> ${total.toLocaleString()} × ${gpa.toFixed(2)} = <span class="hi">${currentPoints.toFixed(2)}</span>`);
+      steps.push(`<strong>Projection Formula:</strong> solve for the number of new reviews needed so the average reaches <span class="hi">${target.toFixed(2)}</span> using ${projectionStar}★ reviews`);
+      steps.push(`<strong>Reviews Needed:</strong> <span class="hi">${needed.toLocaleString()}</span>`);
+      steps.push(`<strong>New Total Reviews:</strong> ${total.toLocaleString()} + ${needed.toLocaleString()} = <span class="hi">${newTotal.toLocaleString()}</span>`);
+      steps.push(`<strong>Projected Rating Points:</strong> ${currentPoints.toFixed(2)} + (${needed.toLocaleString()} × ${projectionStar}) = <span class="hi">${newPoints.toFixed(2)}</span>`);
+      steps.push(`<strong>Projected GPA:</strong> ${newPoints.toFixed(2)} ÷ ${newTotal.toLocaleString()} = <span class="hi">${achieved.toFixed(4)}</span>`);
 
       document.getElementById('steps').innerHTML = steps.map(s =>
         `<div class="step"><span class="step-num"></span><span class="step-text">${s}</span></div>`
       ).join('');
 
       document.getElementById('results').classList.add('visible');
-
-      const slider = document.getElementById('target-slider');
-      slider.min = Math.max(1, gpa - 0.5).toFixed(2);
-      slider.max = 5;
-      slider.value = Math.min(5, gpa + 0.1).toFixed(2);
-      document.getElementById('target-val').textContent = parseFloat(slider.value).toFixed(2);
-
-      updateWhatif();
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    function updateWhatif() {
-      if (!lastCalc) return;
-      const { total, gpa, totalPoints } = lastCalc;
-      const target = parseFloat(document.getElementById('target-slider').value);
-      document.getElementById('target-val').textContent = target.toFixed(2);
-
-      if (wiStar === target) {
-        document.getElementById('whatif-result').innerHTML =
-          `Adding <strong>${wiStar}★</strong> reviews won't move your GPA — they already equal the target.`;
-        return;
-      }
-
-      const n = (target * total - totalPoints) / (wiStar - target);
-
-      if (n < 0) {
-        document.getElementById('whatif-result').innerHTML =
-          `Your current GPA of <strong>${gpa.toFixed(2)}</strong> is already above <strong>${target.toFixed(2)}</strong>.`;
-        return;
-      }
-
-      const rounded = Math.ceil(n);
-      const achieved = (totalPoints + rounded * wiStar) / (total + rounded);
-
-      document.getElementById('whatif-result').innerHTML =
-        `To reach <strong>${target.toFixed(2)}</strong>, you need approximately <span class="hi">${rounded.toLocaleString()} new ${wiStar}★ reviews</span>, bringing you to <strong>${(total + rounded).toLocaleString()} total reviews</strong> at a GPA of <strong>${achieved.toFixed(4)}</strong>.`;
-    }
-
-    addRow(5);
+    updateTargetValue();
     document.addEventListener('keydown', e => {
-      if (e.key === 'Enter') calculate();
+      if (e.key === 'Enter') calculateProjection();
     });
   </script>
 </body>
