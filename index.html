@@ -327,17 +327,78 @@
       color: white;
       box-shadow: 0 4px 14px rgba(30,167,255,0.3);
     }
-    .lb-grid {
+    .lb-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 280px;
       gap: 14px;
+      align-items: start;
     }
+    .lb-main-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+    }
+    .lb-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .lb-mini-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .lb-mini-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .lb-mini-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lb-mini-title span { color: rgba(255,255,255,0.25); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.06em; }
+    .lb-mini-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.78rem;
+    }
+    .lb-mini-row:last-child { border-bottom: none; }
+    .lb-mini-rank {
+      width: 18px; height: 18px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .lb-mini-name { flex: 1; color: rgba(255,255,255,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lb-mini-pts { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.5); }
     .lb-brand-card {
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 22px 24px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+    }
+    @media (max-width: 760px) {
+      .lb-layout { grid-template-columns: 1fr; }
+      .lb-sidebar { flex-direction: row; flex-wrap: wrap; }
+      .lb-mini-card { flex: 1; min-width: 140px; }
     }
     .lb-brand-title {
       font-size: 0.78rem;
@@ -983,9 +1044,11 @@
   }
 
   function renderLeaderboards() {
-    const grid = document.getElementById('lbGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
+    const mainEl = document.getElementById('lbMain');
+    const sideEl = document.getElementById('lbSidebar');
+    if (!mainEl || !sideEl) return;
+    mainEl.innerHTML = '';
+    sideEl.innerHTML = '';
 
     const yourBrand = calcSelectedLocation ? calcSelectedLocation.brand : null;
     const displayBrand = lbActiveBrand || yourBrand || LB_BRANDS[0];
@@ -993,7 +1056,7 @@
     // Build/refresh tabs
     buildBrandTabs(yourBrand);
 
-    // Make sure active tab matches
+    // Sync active state
     if (lbActiveBrand !== displayBrand) {
       lbActiveBrand = displayBrand;
       document.querySelectorAll('.lb-brand-tab').forEach(b => {
@@ -1003,17 +1066,12 @@
 
     const youId = calcSelectedLocation ? calcSelectedLocation.id : null;
 
+    // ── MAIN leaderboard (active brand) ──
     const entries = locationData
       .filter(l => l.brand === displayBrand)
       .sort((a, b) => parseFloat(b.totalPoints) - parseFloat(a.totalPoints))
       .slice(0, lbCount);
 
-    if (entries.length === 0) {
-      grid.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:0.88rem;padding:12px 0;">No data for this brand.</div>';
-      return;
-    }
-
-    // Check if selected location is outside top N — show their rank too
     let yourEntry = null;
     if (youId && calcSelectedLocation && calcSelectedLocation.brand === displayBrand) {
       const allSorted = locationData
@@ -1024,9 +1082,6 @@
         yourEntry = { loc: allSorted[yourRankIdx], rank: yourRankIdx + 1 };
       }
     }
-
-    const card = document.createElement('div');
-    card.className = 'lb-brand-card lb-single';
 
     let rows = entries.map((loc, i) => {
       const rank = i + 1;
@@ -1042,31 +1097,62 @@
       </tr>`;
     }).join('');
 
-    // Append your row below the list if outside top N
     if (yourEntry) {
-      const r = yourEntry.rank;
-      const rankClass = 'lb-rank-other';
       rows += `<tr><td colspan="4" style="padding:4px 0;"><div style="text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;">· · ·</div></td></tr>`;
       rows += `<tr class="lb-you-row">
-        <td><div class="lb-rank-cell"><span class="lb-rank-badge ${rankClass}">${r}</span></div></td>
+        <td><div class="lb-rank-cell"><span class="lb-rank-badge lb-rank-other">${yourEntry.rank}</span></div></td>
         <td><span class="lb-highlight">${yourEntry.loc.office} ★</span></td>
         <td class="num">${parseFloat(yourEntry.loc.totalPoints).toLocaleString(undefined,{maximumFractionDigits:1})}</td>
         <td class="num">${parseFloat(yourEntry.loc.gpa).toFixed(2)}</td>
       </tr>`;
     }
 
-    card.innerHTML = `
-      <table class="lb-table">
-        <thead><tr>
-          <th style="width:36px"></th>
-          <th>Office</th>
-          <th class="num">Points</th>
-          <th class="num">Score</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
+    const mainCard = document.createElement('div');
+    mainCard.className = 'lb-main-card';
+    mainCard.innerHTML = entries.length === 0
+      ? '<div style="color:rgba(255,255,255,0.4);font-size:0.88rem;padding:12px 0;">No data for this brand.</div>'
+      : `<table class="lb-table">
+          <thead><tr>
+            <th style="width:36px"></th>
+            <th>Office</th>
+            <th class="num">Points</th>
+            <th class="num">Score</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    mainEl.appendChild(mainCard);
 
-    grid.appendChild(card);
+    // ── SIDEBAR: Top 3 for other brands ──
+    const otherBrands = LB_BRANDS.filter(b => b !== displayBrand);
+    otherBrands.forEach(brand => {
+      const top3 = locationData
+        .filter(l => l.brand === brand)
+        .sort((a, b) => parseFloat(b.totalPoints) - parseFloat(a.totalPoints))
+        .slice(0, 3);
+
+      if (top3.length === 0) return;
+
+      const miniCard = document.createElement('div');
+      miniCard.className = 'lb-mini-card';
+      miniCard.title = `Click to view ${brand} leaderboard`;
+      miniCard.onclick = () => setLbBrand(brand);
+
+      const miniRows = top3.map((loc, i) => {
+        const rank = i + 1;
+        const rankClass = rank === 1 ? 'lb-rank-1' : rank === 2 ? 'lb-rank-2' : 'lb-rank-3';
+        return `<div class="lb-mini-row">
+          <span class="lb-mini-rank lb-rank-badge ${rankClass}">${rank}</span>
+          <span class="lb-mini-name">${loc.office}</span>
+          <span class="lb-mini-pts">${parseFloat(loc.totalPoints).toLocaleString(undefined,{maximumFractionDigits:1})}</span>
+        </div>`;
+      }).join('');
+
+      miniCard.innerHTML = `
+        <div class="lb-mini-title">${brand} <span>tap to expand →</span></div>
+        ${miniRows}`;
+
+      sideEl.appendChild(miniCard);
+    });
   }
 
   // ── INIT ─────────────────────────────────────────────────
