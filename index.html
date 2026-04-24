@@ -220,6 +220,34 @@
     .locked-card { opacity: 0.4; pointer-events: none; transition: opacity 0.2s; }
     .locked-card.unlocked { opacity: 1; pointer-events: auto; }
 
+    /* ── Dropdown option contrast ── */
+    .input-group select option {
+      background: #0d2b4c;
+      color: #ffffff;
+    }
+
+    /* ── Data status footer ── */
+    .data-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-top: 40px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .data-bar .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--warn);
+      flex-shrink: 0;
+    }
+    .data-bar .dot.live { background: var(--star5); animation: pulse 2s infinite; }
+    .data-bar strong { color: rgba(255,255,255,0.65); }
+
     @media (max-width: 900px) {
       .two-col, .input-grid, .metric-grid, .h2h-grid { grid-template-columns: 1fr; }
       .selector-grid { grid-template-columns: 1fr; }
@@ -240,12 +268,6 @@
     <p class="tool-description">
       Select a location to auto-fill reputation metrics, project how many additional 5-star reviews are needed to reach a target rating, and compare performance against peers in your brand and market.
     </p>
-  </div>
-
-  <!-- Data status -->
-  <div class="data-bar">
-    <div class="dot" id="statusDot"></div>
-    <span id="statusText">Loading location data...</span>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -451,7 +473,7 @@
 
 <script>
   // ── CONFIG ──────────────────────────────────────────────
-  const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/refs/heads/main/locations.json';
+  const DATA_URL = 'https://raw.githubusercontent.com/YOURUSERNAME/pfm-review-data/main/locations.json';
 
   // ── STATE ───────────────────────────────────────────────
   let locationData = [];
@@ -776,5 +798,12 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Enter') calculateProjection(); });
 </script>
+
+  <!-- Data status footer -->
+  <div class="data-bar">
+    <div class="dot" id="statusDot"></div>
+    <span id="statusText">Loading location data...</span>
+  </div>
+
 </body>
 </html>
