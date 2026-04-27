@@ -675,36 +675,12 @@
 </div>
 
 <script>
-  // ── CONFIG ──────────────────────────────────────────────
-  const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/main/locations.json';
+   // ── CONFIG ──────────────────────────────────────────────
+  // This uses the official GitHub Pages URL which bypasses CORS security blocks!
+  const DATA_URL = 'https://carocreativeco.github.io/pfm-review-data/locations.json';
 
   // ── STATE ───────────────────────────────────────────────
-  let locationData = [];
-  let calcSelectedLocation = null;
-
-  // ── DATA LOADING ────────────────────────────────────────
-  async function loadData() {
-    try {
-      const res = await fetch("https://raw.githubusercontent.com/carocreativeco/pfm-review-data/main/locations.json");
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      locationData = await res.json();
-
-      // Parse numeric fields (they come as strings from Power Automate)
-      locationData = locationData.map(loc => ({
-        ...loc,
-        totalPoints: parseFloat(loc.totalPoints) || 0,
-        gpa: parseFloat(loc.gpa) || 0
-      }));
-
-      // Update status
-      document.getElementById('statusDot').classList.add('live');
-      document.getElementById('statusText').innerHTML = `<strong>${locationData.length} locations</strong> loaded live from SharePoint`;
-      document.getElementById('dataStatus').value = `${locationData.length} locations loaded`;
-
-      populateCalcDropdown();
-      populateBrandDropdown();
-      renderLeaderboards();
-
+  let locationData =<span class="ml-2" /><span class="inline-block w-3 h-3 rounded-full bg-neutral-a12 align-middle mb-[0.1rem]" />
     } catch (err) {
       console.error('Data load failed:', err);
       document.getElementById('statusDot').style.background = 'var(--danger)';
