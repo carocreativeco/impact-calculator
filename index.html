@@ -685,7 +685,7 @@
   // ── DATA LOADING ────────────────────────────────────────
   async function loadData() {
     try {
-      const res = await fetch(DATA_URL);
+      const res = await fetch("https://raw.githubusercontent.com/carocreativeco/pfm-review-data/refs/heads/main/locations.json");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       locationData = await res.json();
 
