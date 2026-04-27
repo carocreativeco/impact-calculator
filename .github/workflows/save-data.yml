@@ -1,0 +1,26 @@
+name: Catch and Save JSON
+
+on:
+  repository_dispatch:
+    types: [update_json]
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # This grabs the safe string and decodes it back into your actual JSON
+      - name: Save JSON to file
+        env:
+          ENCODED_DATA: ${{ github.event.client_payload.my_data }}
+        # This saves the data into locations.json. Change if your file is named differently!
+        run: echo "$ENCODED_DATA" | base64 --decode > locations.json
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add locations.json
+          git commit -m "Automated JSON update from Power Automate"
+          git push
