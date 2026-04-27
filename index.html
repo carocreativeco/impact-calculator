@@ -676,7 +676,7 @@
 
 <script>
   // ── CONFIG ──────────────────────────────────────────────
-  const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/refs/heads/main/locations.json';
+  const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/main/locations.json';
 
   // ── STATE ───────────────────────────────────────────────
   let locationData = [];
@@ -685,7 +685,7 @@
   // ── DATA LOADING ────────────────────────────────────────
   async function loadData() {
     try {
-      const res = await fetch("https://raw.githubusercontent.com/carocreativeco/pfm-review-data/refs/heads/main/locations.json");
+      const res = await fetch("https://raw.githubusercontent.com/carocreativeco/pfm-review-data/main/locations.json");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       locationData = await res.json();
 
