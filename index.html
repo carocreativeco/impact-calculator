@@ -683,13 +683,19 @@
   let locationData =[];
   let calcSelectedLocation = null;
 
-  // ── DATA LOADING ────────────────────────────────────────
+  // ── DATA LOADING ───────────────────────────────────────
   async function loadData() {
     try {
-      // Notice we are using the DATA_URL variable here now!
       const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       locationData = await res.json();
+
+      // --- ADD THIS NEW SECTION ---
+      // Unwrap the Power Automate data package to get the actual list
+      if (!Array.isArray(locationData)) {
+        locationData = locationData.value || locationData.my_data || Object.values(locationData)[0] ||[];
+      }
+      // ----------------------------
 
       // Parse numeric fields (they come as strings from Power Automate)
       locationData = locationData.map(loc => ({
