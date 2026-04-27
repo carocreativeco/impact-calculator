@@ -675,16 +675,42 @@
 </div>
 
 <script>
-   // ── CONFIG ──────────────────────────────────────────────
+  // ── CONFIG ──────────────────────────────────────────────
   // This uses the official GitHub Pages URL which bypasses CORS security blocks!
   const DATA_URL = 'https://carocreativeco.github.io/pfm-review-data/locations.json';
 
   // ── STATE ───────────────────────────────────────────────
-  let locationData =<span class="ml-2" /><span class="inline-block w-3 h-3 rounded-full bg-neutral-a12 align-middle mb-[0.1rem]" />
+  let locationData =[];
+  let calcSelectedLocation = null;
+
+  // ── DATA LOADING ────────────────────────────────────────
+  async function loadData() {
+    try {
+      // Notice we are using the DATA_URL variable here now!
+      const res = await fetch(DATA_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      locationData = await res.json();
+
+      // Parse numeric fields (they come as strings from Power Automate)
+      locationData = locationData.map(loc => ({
+        ...loc,
+        totalPoints: parseFloat(loc.totalPoints) || 0,
+        gpa: parseFloat(loc.gpa) || 0
+      }));
+
+      // Update status
+      document.getElementById('statusDot').classList.add('live');
+      document.getElementById('statusText').innerHTML = `<strong>${locationData.length} locations</strong> loaded live`;
+      document.getElementById('dataStatus').value = `${locationData.length} locations loaded`;
+
+      populateCalcDropdown();
+      populateBrandDropdown();
+      renderLeaderboards();
+
     } catch (err) {
       console.error('Data load failed:', err);
       document.getElementById('statusDot').style.background = 'var(--danger)';
-      document.getElementById('statusText').innerHTML = `<strong>Could not load live data</strong> — check GitHub URL or network`;
+      document.getElementById('statusText').innerHTML = `<strong>Could not load live data</strong> — check GitHub Pages URL or network`;
       document.getElementById('dataStatus').value = 'Load failed';
     }
   }
@@ -792,7 +818,7 @@
       `If achieved, the rating would project to <strong>${fiveStar.achieved.toFixed(4)}</strong>.`;
 
     const currentPoints = total * gpa;
-    const steps = [
+    const steps =[
       `<strong>Current Total Rating Points:</strong> ${total.toLocaleString()} × ${gpa.toFixed(2)} = <span class="hi">${currentPoints.toFixed(2)}</span>`,
       `<strong>Target GPA Selected:</strong> <span class="hi">${target.toFixed(2)}</span>`,
       `<strong>Additional 5★ Reviews Needed:</strong> <span class="hi">${fiveStar.needed.toLocaleString()}</span>`,
@@ -984,11 +1010,10 @@
     document.getElementById('comparisonResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-
   // ── LEADERBOARDS ─────────────────────────────────────────
   let lbCount = 5;
   let lbActiveBrand = null;
-  const LB_BRANDS = ['PPAS', 'PPSRV', 'PINN', 'PINNSRV'];
+  const LB_BRANDS =['PPAS', 'PPSRV', 'PINN', 'PINNSRV'];
 
   function setLbCount(n, btn) {
     lbCount = n;
