@@ -79,6 +79,9 @@
       background: #0d2b4c;
       color: #ffffff;
     }
+    .input-group select option:disabled {
+      color: rgba(255,255,255,0.35);
+    }
 
     .mini-note { margin-top: 12px; font-size: 0.9rem; color: rgba(255,255,255,0.62); line-height: 1.6; }
     .filter-note { margin-top: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.45); font-style: italic; }
@@ -142,10 +145,7 @@
     .step-text strong { color: white; }
     .step-text .hi { color: var(--accent); font-weight: 700; }
 
-    /* Projection Breakdown dropdown */
-    .breakdown details {
-      width: 100%;
-    }
+    .breakdown details { width: 100%; }
     .breakdown-toggle {
       list-style: none;
       cursor: pointer;
@@ -159,21 +159,15 @@
       color: rgba(255,255,255,0.68);
       font-weight: 600;
     }
-    .breakdown-toggle::-webkit-details-marker {
-      display: none;
-    }
+    .breakdown-toggle::-webkit-details-marker { display: none; }
     .breakdown-toggle::after {
       content: '+';
       font-size: 1rem;
       color: var(--accent);
       letter-spacing: 0;
     }
-    details[open] .breakdown-toggle::after {
-      content: '–';
-    }
-    .breakdown-content {
-      margin-top: 16px;
-    }
+    details[open] .breakdown-toggle::after { content: '–'; }
+    .breakdown-content { margin-top: 16px; }
 
     .selector-grid { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: end; }
     .vs-badge { text-align: center; font-size: 0.78rem; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; padding-bottom: 14px; }
@@ -444,12 +438,12 @@
         </div>
         <div class="input-group">
           <label>Data Period</label>
-          <select id="dataStatus">
+          <select id="dataStatus" onchange="handleDataPeriodChange()">
             <option value="March – June 2026" selected>March – June 2026</option>
             <option value="July – September 2026">July – September 2026</option>
             <option value="October – December 2026">October – December 2026</option>
-            <option value="2026">2026</option>
-            <option value="All Time">All Time</option>
+            <option value="2026" disabled>2026</option>
+            <option value="All Time" disabled>All Time</option>
           </select>
         </div>
       </div>
@@ -687,12 +681,15 @@
         populateCalcDropdown();
         populateBrandDropdown();
         renderLeaderboards();
-
       } catch (err) {
         console.error('Data load failed:', err);
         document.getElementById('statusDot').style.background = 'var(--danger)';
         document.getElementById('statusText').innerHTML = `<strong>Could not load live data</strong> — check GitHub Pages URL or network`;
       }
+    }
+
+    function handleDataPeriodChange() {
+      handleCalcLocationChange();
     }
 
     function populateCalcDropdown() {
@@ -709,6 +706,7 @@
 
     function handleCalcLocationChange() {
       const id = document.getElementById('locationSelect').value;
+      const period = document.getElementById('dataStatus').value;
       calcSelectedLocation = locationData.find(l => l.id === id) || null;
 
       if (!calcSelectedLocation) {
@@ -720,9 +718,18 @@
         return;
       }
 
-      document.getElementById('totalPoints').value = calcSelectedLocation.totalPoints;
-      document.getElementById('currentGPA').value = parseFloat(calcSelectedLocation.gpa).toFixed(2);
-      renderRecoveryPlanner(calcSelectedLocation);
+      const useZeroData = period !== 'March – June 2026';
+
+      document.getElementById('totalPoints').value = useZeroData ? 0 : calcSelectedLocation.totalPoints;
+      document.getElementById('currentGPA').value = useZeroData ? '0.00' : parseFloat(calcSelectedLocation.gpa).toFixed(2);
+
+      if (useZeroData) {
+        document.getElementById('recoveryText').textContent =
+          'Recovery estimate is temporarily unavailable for this data period.';
+      } else {
+        renderRecoveryPlanner(calcSelectedLocation);
+      }
+
       document.getElementById('results').classList.remove('visible');
 
       lbActiveBrand = null;
@@ -784,9 +791,18 @@
       const gpa = parseFloat(document.getElementById('currentGPA').value);
       const target = parseFloat(document.getElementById('target-slider').value);
 
-      if (!total || !gpa) { alert('Please select a location or enter Total Points and GPA.'); return; }
-      if (gpa < 0 || gpa > 5 || target < 0 || target > 5) { alert('Ratings must be between 0 and 5.'); return; }
-      if (target <= gpa) { alert('Target GPA must be greater than your current GPA.'); return; }
+      if (!total || !gpa) {
+        alert('Please select a location or enter Total Points and GPA.');
+        return;
+      }
+      if (gpa < 0 || gpa > 5 || target < 0 || target > 5) {
+        alert('Ratings must be between 0 and 5.');
+        return;
+      }
+      if (target <= gpa) {
+        alert('Target GPA must be greater than your current GPA.');
+        return;
+      }
 
       const fiveStar = calculateNeeded(total, gpa, target, 5);
       const locationName = calcSelectedLocation ? calcSelectedLocation.office : 'This location';
