@@ -32,41 +32,16 @@
 
     .page { max-width: 980px; margin: 0 auto; }
 
-    /* ── Header ── */
     .header { text-align: center; margin-bottom: 36px; }
     .logo-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
     .logo-wrap img { max-width: 180px; width: 100%; height: auto; object-fit: contain; display: block; }
     .tool-title { font-size: clamp(2.1rem, 5vw, 3.8rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 14px; }
     .tool-description { max-width: 760px; margin: 0 auto; color: var(--muted); font-size: 1.03rem; line-height: 1.7; }
 
-    /* ── Data status bar ── */
-    .data-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(30,167,255,0.08);
-      border: 1px solid rgba(30,167,255,0.2);
-      border-radius: 12px;
-      padding: 10px 16px;
-      margin-bottom: 20px;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.7);
-    }
-    .data-bar .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--warn);
-      flex-shrink: 0;
-    }
-    .data-bar .dot.live { background: var(--star5); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .data-bar strong { color: white; }
-
-    /* ── Section divider ── */
     .section-header { display: flex; align-items: center; gap: 14px; margin: 32px 0 20px; }
     .section-header-line { flex: 1; height: 1px; background: var(--border); }
     .section-header-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; white-space: nowrap; }
 
-    /* ── Cards ── */
     .card {
       width: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
@@ -79,7 +54,6 @@
     }
     .card-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.68); margin-bottom: 18px; font-weight: 600; }
 
-    /* ── Inputs ── */
     .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .input-group { display: flex; flex-direction: column; gap: 8px; }
     .input-group label { font-size: 0.8rem; color: rgba(255,255,255,0.8); font-weight: 500; }
@@ -101,16 +75,19 @@
     .input-group input:focus,
     .input-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(30,167,255,0.14); }
     .input-group select:disabled { opacity: 0.4; cursor: not-allowed; }
+    .input-group select option {
+      background: #0d2b4c;
+      color: #ffffff;
+    }
+
     .mini-note { margin-top: 12px; font-size: 0.9rem; color: rgba(255,255,255,0.62); line-height: 1.6; }
     .filter-note { margin-top: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.45); font-style: italic; }
 
-    /* ── Slider ── */
     .projection-label { font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 14px; font-weight: 600; }
     .slider-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
     .slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
     .slider-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); min-width: 62px; text-align: right; }
 
-    /* ── Buttons ── */
     .btn-calc, .btn-compare {
       width: 100%;
       padding: 18px;
@@ -131,7 +108,6 @@
     .btn-calc:hover, .btn-compare:hover { background: var(--accent-dark); transform: translateY(-1px); }
     .btn-compare:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    /* ── Calculator Results ── */
     .results { display: none; flex-direction: column; gap: 14px; }
     .results.visible { display: flex; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -157,11 +133,6 @@
     .overview-text strong, .leaderboard-text strong, .tool-text strong { color: white; }
     .overview-text .hi, .leaderboard-text .hi, .tool-text .hi { color: var(--accent); font-weight: 700; }
 
-    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
-    .metric { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; }
-    .metric-label { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.58); margin-bottom: 6px; font-weight: 600; }
-    .metric-value { font-size: 1.35rem; font-weight: 800; line-height: 1.1; }
-
     .steps { display: flex; flex-direction: column; margin-top: 10px; counter-reset: step; }
     .step { display: flex; align-items: baseline; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.95rem; line-height: 1.65; counter-increment: step; }
     .step:last-child { border-bottom: none; }
@@ -171,7 +142,7 @@
     .step-text strong { color: white; }
     .step-text .hi { color: var(--accent); font-weight: 700; }
 
-    /* ── Projection Breakdown Dropdown ── */
+    /* Projection Breakdown dropdown */
     .breakdown details {
       width: 100%;
     }
@@ -194,17 +165,16 @@
     .breakdown-toggle::after {
       content: '+';
       font-size: 1rem;
-      letter-spacing: 0;
       color: var(--accent);
+      letter-spacing: 0;
     }
-    .breakdown details[open] .breakdown-toggle::after {
+    details[open] .breakdown-toggle::after {
       content: '–';
     }
     .breakdown-content {
       margin-top: 16px;
     }
 
-    /* ── Peer Comparison ── */
     .selector-grid { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: end; }
     .vs-badge { text-align: center; font-size: 0.78rem; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; padding-bottom: 14px; }
 
@@ -237,7 +207,6 @@
     .delta-bar-wrap { position: relative; height: 8px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
     .delta-bar-fill { position: absolute; top: 0; height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); }
     .delta-bar-fill.you { background: var(--accent); }
-    .delta-bar-fill.peer-bar { background: var(--purple); }
     .delta-value { font-size: 0.82rem; font-weight: 700; text-align: right; }
     .delta-value.ahead { color: var(--star5); }
     .delta-value.behind { color: var(--danger); }
@@ -246,54 +215,13 @@
     .insight-card { background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03)); border: 1px solid var(--border); border-radius: 22px; padding: 24px 26px; }
     .insight-text { font-size: 0.96rem; color: var(--muted); line-height: 1.8; }
     .insight-text strong { color: white; }
-    .insight-text .hi { color: var(--accent); font-weight: 700; }
     .insight-text .hi-green { color: var(--star5); font-weight: 700; }
     .insight-text .hi-red { color: var(--danger); font-weight: 700; }
 
     .locked-card { opacity: 0.4; pointer-events: none; transition: opacity 0.2s; }
     .locked-card.unlocked { opacity: 1; pointer-events: auto; }
 
-    /* ── Dropdown option contrast ── */
-    .input-group select option {
-      background: #0d2b4c;
-      color: #ffffff;
-    }
-
-    /* ── Footer data bar ── */
-    .footer-data-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 10px 16px;
-      margin-top: 40px;
-      font-size: 0.76rem;
-      color: rgba(255,255,255,0.4);
-    }
-    .footer-data-bar .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--warn);
-      flex-shrink: 0;
-    }
-    .footer-data-bar .dot.live { background: var(--star5); animation: pulse 2s infinite; }
-    .footer-data-bar strong { color: rgba(255,255,255,0.65); }
-
-    @media (max-width: 900px) {
-      .two-col, .input-grid, .metric-grid, .h2h-grid { grid-template-columns: 1fr; }
-      .selector-grid { grid-template-columns: 1fr; }
-      .vs-badge { display: none; }
-      .delta-row { grid-template-columns: 110px 1fr 60px; }
-    }
-
-    /* ── Leaderboard brand tabs ── */
-    .lb-brand-tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .lb-brand-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
     .lb-brand-tab {
       padding: 7px 16px;
       border-radius: 999px;
@@ -357,12 +285,8 @@
       color: white;
       box-shadow: 0 4px 14px rgba(30,167,255,0.3);
     }
-    .lb-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items: start;
-    }
+
+    .lb-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
     .lb-main-card {
       background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
@@ -370,11 +294,7 @@
       padding: 22px 24px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.14);
     }
-    .lb-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .lb-sidebar { display: flex; flex-direction: column; gap: 10px; }
     .lb-mini-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
@@ -419,16 +339,7 @@
     .lb-mini-name { flex: 1; color: rgba(255,255,255,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lb-mini-pts { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.5); }
 
-    @media (max-width: 760px) {
-      .lb-layout { grid-template-columns: 1fr; }
-      .lb-sidebar { flex-direction: row; flex-wrap: wrap; }
-      .lb-mini-card { flex: 1; min-width: 140px; }
-    }
-
-    .lb-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .lb-table { width: 100%; border-collapse: collapse; }
     .lb-table th {
       font-size: 0.66rem;
       letter-spacing: 0.1em;
@@ -449,11 +360,8 @@
     }
     .lb-table tr:last-child td { border-bottom: none; }
     .lb-table td.num { text-align: right; font-weight: 700; }
-    .lb-rank-cell {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+
+    .lb-rank-cell { display: flex; align-items: center; gap: 8px; }
     .lb-rank-badge {
       width: 24px; height: 24px;
       border-radius: 6px;
@@ -471,15 +379,44 @@
     .lb-you-row td:first-child { border-radius: 8px 0 0 8px; }
     .lb-you-row td:last-child { border-radius: 0 8px 8px 0; }
 
-    @media (max-width: 700px) {
-      .lb-grid { grid-template-columns: 1fr; }
+    .footer-data-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-top: 40px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-data-bar .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--warn);
+      flex-shrink: 0;
+    }
+    .footer-data-bar .dot.live { background: var(--star5); animation: pulse 2s infinite; }
+    .footer-data-bar strong { color: rgba(255,255,255,0.65); }
+
+    @media (max-width: 900px) {
+      .two-col, .input-grid, .h2h-grid { grid-template-columns: 1fr; }
+      .selector-grid { grid-template-columns: 1fr; }
+      .vs-badge { display: none; }
+      .delta-row { grid-template-columns: 110px 1fr 60px; }
+    }
+
+    @media (max-width: 760px) {
+      .lb-layout { grid-template-columns: 1fr; }
+      .lb-sidebar { flex-direction: row; flex-wrap: wrap; }
+      .lb-mini-card { flex: 1; min-width: 140px; }
     }
   </style>
 </head>
 <body>
   <div class="page">
 
-    <!-- Header -->
     <div class="header">
       <div class="logo-wrap">
         <img src="logo.png" alt="Logo">
@@ -490,9 +427,6 @@
       </p>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         SECTION 1: REVIEW IMPACT CALCULATOR
-    ══════════════════════════════════════════ -->
     <div class="section-header">
       <div class="section-header-line"></div>
       <div class="section-header-label">Review Impact Calculator</div>
@@ -589,9 +523,6 @@
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         SECTION 2: PEER COMPARISON
-    ══════════════════════════════════════════ -->
     <div class="section-header">
       <div class="section-header-line"></div>
       <div class="section-header-label">Peer Comparison</div>
@@ -651,6 +582,7 @@
             </div>
           </div>
         </div>
+
         <div class="h2h-card peer">
           <div class="h2h-tag">Peer</div>
           <div class="h2h-name" id="peer-name">—</div>
@@ -696,9 +628,6 @@
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         SECTION 3: BRAND LEADERBOARDS
-    ══════════════════════════════════════════ -->
     <div class="section-header">
       <div class="section-header-line"></div>
       <div class="section-header-label">Brand Leaderboards</div>
@@ -720,7 +649,6 @@
       </div>
     </div>
 
-    <!-- Data status footer -->
     <div class="footer-data-bar">
       <div class="dot" id="statusDot"></div>
       <span id="statusText">Loading location data...</span>
@@ -729,14 +657,14 @@
   </div>
 
   <script>
-    // ── CONFIG ──────────────────────────────────────────────
     const DATA_URL = 'https://raw.githubusercontent.com/carocreativeco/pfm-review-data/main/locations.json';
 
-    // ── STATE ───────────────────────────────────────────────
     let locationData = [];
     let calcSelectedLocation = null;
+    let lbCount = 5;
+    let lbActiveBrand = null;
+    const LB_BRANDS = ['PPAS', 'PPSRV', 'PINN', 'PINNSRV'];
 
-    // ── DATA LOADING ───────────────────────────────────────
     async function loadData() {
       try {
         const res = await fetch(DATA_URL);
@@ -755,7 +683,6 @@
 
         document.getElementById('statusDot').classList.add('live');
         document.getElementById('statusText').innerHTML = `<strong>${locationData.length} locations</strong> loaded live`;
-        document.getElementById('dataStatus').value = 'March – June 2026';
 
         populateCalcDropdown();
         populateBrandDropdown();
@@ -768,7 +695,6 @@
       }
     }
 
-    // ── CALCULATOR ───────────────────────────────────────────
     function populateCalcDropdown() {
       const sel = document.getElementById('locationSelect');
       sel.innerHTML = '<option value="">Choose a franchise location</option>';
@@ -784,6 +710,7 @@
     function handleCalcLocationChange() {
       const id = document.getElementById('locationSelect').value;
       calcSelectedLocation = locationData.find(l => l.id === id) || null;
+
       if (!calcSelectedLocation) {
         document.getElementById('totalPoints').value = '';
         document.getElementById('currentGPA').value = '';
@@ -792,10 +719,12 @@
         renderLeaderboards();
         return;
       }
+
       document.getElementById('totalPoints').value = calcSelectedLocation.totalPoints;
       document.getElementById('currentGPA').value = parseFloat(calcSelectedLocation.gpa).toFixed(2);
       renderRecoveryPlanner(calcSelectedLocation);
       document.getElementById('results').classList.remove('visible');
+
       lbActiveBrand = null;
       renderLeaderboards();
 
@@ -803,6 +732,7 @@
       const brandSel = document.getElementById('brandSelect');
       brandSel.value = brand;
       handleBrandChange();
+
       const youSel = document.getElementById('youSelect');
       youSel.value = calcSelectedLocation.id;
       handleYouChange();
@@ -827,15 +757,18 @@
     function renderRecoveryPlanner(loc) {
       const total = loc.totalPoints;
       const gpa = parseFloat(loc.gpa);
+
       if (!total || !gpa) {
         document.getElementById('recoveryText').textContent = 'Insufficient data to calculate recovery.';
         return;
       }
+
       const currentPoints = total * gpa;
       const newTotalAfterBad = total + 1;
       const newPointsAfterBad = currentPoints + 1;
       const newGpaAfterBad = newPointsAfterBad / newTotalAfterBad;
       const recoverNeeded = calculateNeeded(newTotalAfterBad, newGpaAfterBad, gpa, 5);
+
       document.getElementById('recoveryText').innerHTML =
         `If <strong>${loc.office}</strong> received one new <strong>1★ review</strong>, its average would move from <strong>${gpa.toFixed(2)}</strong> to <strong>${newGpaAfterBad.toFixed(4)}</strong>. Returning to the current average would require approximately <span class="hi">${recoverNeeded.needed.toLocaleString()} additional 5★ reviews</span>.`;
     }
@@ -888,7 +821,6 @@
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    // ── PEER COMPARISON ──────────────────────────────────────
     function populateBrandDropdown() {
       const brands = [...new Set(locationData.map(l => l.brand))].filter(Boolean).sort();
       const sel = document.getElementById('brandSelect');
@@ -923,7 +855,6 @@
       }
 
       const inBrand = locationData.filter(l => l.brand === brand).sort((a, b) => a.office.localeCompare(b.office));
-
       inBrand.forEach(loc => {
         const opt = document.createElement('option');
         opt.value = loc.id;
@@ -1054,11 +985,6 @@
       document.getElementById('comparisonResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    // ── LEADERBOARDS ─────────────────────────────────────────
-    let lbCount = 5;
-    let lbActiveBrand = null;
-    const LB_BRANDS = ['PPAS', 'PPSRV', 'PINN', 'PINNSRV'];
-
     function setLbCount(n, btn) {
       lbCount = n;
       document.querySelectorAll('.lb-toggle-btn').forEach(b => b.classList.remove('active'));
@@ -1092,6 +1018,7 @@
       const mainEl = document.getElementById('lbMain');
       const sideEl = document.getElementById('lbSidebar');
       if (!mainEl || !sideEl) return;
+
       mainEl.innerHTML = '';
       sideEl.innerHTML = '';
 
@@ -1190,13 +1117,13 @@
 
         miniCard.innerHTML = `
           <div class="lb-mini-title">${brand} <span>tap to expand →</span></div>
-          ${miniRows}`;
+          ${miniRows}
+        `;
 
         sideEl.appendChild(miniCard);
       });
     }
 
-    // ── INIT ─────────────────────────────────────────────────
     updateTargetValue();
     loadData();
 
